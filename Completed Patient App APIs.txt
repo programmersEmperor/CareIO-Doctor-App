@@ -1,0 +1,818 @@
+### App APIs ###
+//============================================//
+1- DoctorAI Chat:
+	Method: POST,
+	URL: /api/v1/app/patients/ai/chat,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+		"Authorization": "Bearer Token",
+		"Fingerprint": "string",
+		"DeviceToken": "string"
+		}
+	Body: {
+  		"summary": "string",
+  		"chats": [
+ 		   	   {
+		      		"role": "patient",  ==> ['patient' or 'dr']
+ 		     		"content": "string"
+ 		   	    }
+			  ]
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+		"code": 200,
+		"message": "operation succeeded",
+		"result": {
+				"summary": "string",
+				"response": "string"
+			}
+		}
+
+//==============================================//
+2- Patients Register:
+	Method: POST,
+	URL: /api/v1/app/patients/register,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en" or "ar",
+ 		"DeviceToken":"string",
+		}
+	Body: {
+		"name": "string" => nullable
+  		"password": "string",
+		"email": "string" => nullable
+		"phone": "string",
+  		}
+	Sucessful Code: 201,
+	Sucessful Response: {app/patients
+		"message": "created sucessfully",
+		"result": {
+			"temp-token":string,
+                  	}
+		}	
+
+//==============================================//
+3- Patients Login (first login/ different fingerprint):
+	Method: POST,
+	URL: /api/v1/app/patients/login,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en" or "ar",
+		"Fingerprint": "string",
+		"DeviceToken": "string",
+		}
+	Body: {
+		"phone": "string", 
+  		"password": "string",
+		
+  		}
+	Sucessful Code: 203,
+	Sucessful Response: {
+		"message": "OTP Check Required",
+		"result": {
+			'temp-token':string
+			}
+		}
+
+//==============================================//
+4- Patients Login:
+	Method: POST,
+	URL: /api/v1/app/patients/login,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en" or "ar",
+		"Fingerprint": "string",
+		"DeviceToken": "string"
+		}
+	Body: {
+		"phone": "string",
+  		"password": "string",
+		
+  		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+		"code": 200,
+		"message": "Logged In sucessfully",
+		"result": {
+			"patient": {
+				"name": "string",
+				"phone": "string",
+				"email":"string",
+				"avatar": "string",
+				"messageBalance": int,
+            			"appointmentBook": 0,
+            			"appointmentWaiting": 0,
+           			"unreadNotifications": 0,
+            			"subscription": {
+                			"id": int,
+                			"nameAr": "string",
+                			"nameEn": "string"
+            			}
+				
+			}
+			"token":"string",
+			}
+		}
+
+//==============================================//
+5- Patients Update:
+	Method: POST,
+	URL: /api/v1/app/patients/update,
+	headers: {
+		"Content-Type": "multipart/form-data",
+		"Accept-Language": "en" or "ar",
+		"Fingerprint": "string",
+		"DeviceToken": "string",
+		"Authorization":"Bearer token"
+		}
+	Body: {
+  		"name": "string",
+  		"avatar": "string",
+  		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+		"code": 200,
+		"message": "Updated sucessfully",
+		"result": {
+				"name": "string",
+				"phone": "string",
+				"email":"string",
+				"avatar": "string",
+			}
+		}
+
+//==============================================//
+6- Patients Reset Password:
+	Method: POST,
+	URL: /api/v1/app/patients/resetPassword,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en" or "ar",
+		"Fingerprint": "string",
+		"DeviceToken": "string",
+		"Authorization":"Bearer token"
+		}
+	Body: {
+  		"oldPassword": "string", => it is required if is-forget is false
+  		"newPassword": "string",
+		"is-forget": bool
+  		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+		"code": 200,
+		"message": "Password reset sucessfully",
+		"result": {}
+		}	
+
+
+//==============================================//
+
+9- VerifyOTP:
+	Method: POST
+	URL: /api/v1/app/patients/phone/verifyOTP,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en" or "ar",
+		"Fingerprint": "string",
+		"DeviceToken": "string",
+		"Authorization":"Bearer token"
+		}	
+	Body: {
+		"otp": "string",
+		"is-forget":"boolean",
+  		}
+
+	Sucessful Code: 200,
+	Sucessful Response: {
+		"code": 200,
+		"message": "Phone verified successfully",
+		"result": {
+
+		case is-forget? {
+				"temp-token":string
+			}
+					:
+			"patient": {
+				"name": "string",
+				"phone": "string",
+				"email":"string",
+				"avatar": "string",
+				"messageBalance": int,
+            			"appointmentBook": 0,
+            			"appointmentWaiting": 0,
+           			"unreadNotifications": 0,
+            			"subscription": {
+                			"id": int,
+                			"nameAr": "string",
+                			"nameEn": "string"
+            			}
+				
+			},
+			"token":"string",
+			}
+		}
+
+
+//==============================================//
+
+10- sendOTP:
+	Method: POST
+	URL: /api/v1/app/patients/phone/sendOTP,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR"
+		}	
+	Body: {
+  	
+		"phone": "string",
+  		}
+
+	Sucessful Code: 200,
+	Sucessful Response: {
+		"code": 200,
+		"message": "Phone verified successfully",
+		"result": {	
+			"temp-token":"string",
+			}
+		}
+
+
+//==============================================//
+11- Fetch Cities:
+	Method: GET,
+	URL: /api/v1/app/patients/cities,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Cities are Fetched Successfully",
+    		"result": [
+			{
+			id: int,
+			nameAr: 'string',
+			nameEn: 'string'
+			}
+		]
+		}
+
+=================================================
+12- Fetch Degrees:
+	Method: GET,
+	URL: /api/v1/app/patients/degrees,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Degrees are Fetched Successfully",
+    		"result": [
+			{
+			id: int,
+			nameAr: 'string',
+			nameEn: 'string'
+			}
+		]
+		}
+
+=================================================
+13- Fetch Specialisms:
+	Method: GET,
+	URL: /api/v1/app/patients/specialisms,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Specialisms are Fetched Successfully",
+    		"result": [
+			{
+			id: int,
+			nameAr: 'string',
+			nameEn: 'string'
+			}
+		]
+		}
+
+=================================================
+14- Fetch Notification:
+	Method: GET,
+	URL: /api/v1/app/patients/notifications?page=[int],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Notifications are Fetched Successfully",
+    		"result": {
+			pages: int,
+			data:	
+			[
+			 {
+			 id: int,
+			 title: "string",
+			 body: "string",
+			 createdAt: Date,
+			 isRead: bool,
+			 }
+			]
+			}
+		}
+
+=================================================
+15- Update Notifications:
+	Method: GET,
+	URL: /api/v1/app/notifications/[id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Notification number [id] is read successfully",
+    		"result": {id}
+		}
+=================================================
+16- Fetch SubscriptionPlan:
+	Method: GET,
+	URL: /api/v1/app/patients/subscription-plans,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Subscription Plans are Fetched Successfully",
+    		"result":[
+			 {
+			 "id": int,
+			 "titleAr": "string",
+			 "titleEn": "string",
+			 "descriptionAr": "string",
+			 "descriptionAr": "string",
+			 "price": float,
+			 }
+			]
+		}
+=================================================
+17- Fetch SubscriptionPlan:
+	Method: POST,
+	URL: /api/v1/app/patients/subscription-plans/[id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	body: {
+		'walletId': int,
+		'phone': 'string',
+		'paymentCode': 'string'
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "You have subscribed successfully",
+    		"result": {id}
+		}
+
+=================================================
+18- Fetch Wallets:
+	Method: GET,
+	URL: /api/v1/app/patients/wallets,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Wallets are Fetched Successfully",
+    		"result": {id}
+		}
+
+=================================================
+19- Fetch Doctors:
+	Method: GET,
+	URL: /api/v1/app/patients/doctors?page=[int]&specilism=[int]&degree=[int]&health-center=[int]&section=[int]&clinic=[int]&name=[text]&order-by-rating=[bit],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		},
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Doctors are Fetched Successfully",
+    		"result": {
+			pages: int,
+			data: [
+			 {
+			 "id": int,
+			 "name": "string",
+			 "avatar": "string",
+			 "rating": float,
+			 "completedAppointments": int,
+			 "degree": {
+				"nameAr": "string",
+				"nameEn": "string"
+				},
+			 "specialism": {
+				"nameAr": "string",
+				"nameEn": "string"
+				},
+			 }
+			] 
+			}
+		}
+
+=================================================
+20- Fetch Doctor Details:
+	Method: GET,
+	URL: /api/v1/app/patients/doctors/[Id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		},
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Doctor is Fetched Successfully",
+    		"result": {
+			 "id": int,
+			 "name": "string",
+			 "avatar": "string",
+			 "rating": float,
+			 "phone": "string",
+			 "isRecommended": boolean,
+			 "description":"string",
+			 "completedAppointments": int
+			 "degree": {
+				"nameAr": "string",
+				"nameEn": "string"
+				},
+			 "specialism": {
+				"nameAr": "string",
+				"nameEn": "string"
+				},
+			 "experience":[
+					{
+					 "id": int,
+					 "place":"string",
+					 "position":"string",
+					 "from":"string",
+					 "to":"string"
+					}
+				],
+			"qualifications":[
+					{
+					 "id": int,
+					 "place":"string",
+					 "position":"string",
+					 "from":"string",
+					 "to":"string"
+					},
+				],
+			"healthCenters":[
+					{
+					 "id": int,
+					 "name":"string",
+					 "address":"string",
+					 "avatar":"string",
+					 "rating":"string",
+					 "price": float,
+					 "activeTimes":[
+					 {
+					  "id": int,
+					  "day": int,
+					  "from": DateTime,
+					  "to": DateTime
+					 }
+					],
+					},
+				],
+
+			 }
+		}
+
+=================================================
+21- Fetch Health Centers:
+	Method: GET,
+	URL: /api/v1/app/patients/heath-centers?page=[int]&type=[int]&name=[text]&city=[int]&longitude=[float]&latitude=[float],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Health Centers are Fetched Successfully",
+    		"result": {
+		 "pages": int,
+		 "data": [
+			 {
+			 "id": int,
+			 "name":"string",
+			 "address":"string",
+			 "avatar":"string",
+			 "rating":"string",
+			 "completedAppointment": int,
+			 "type": int,
+			 "city" : {
+				"nameAr" : "string",
+				"nameEn" : "string",
+				}
+			 }
+			]
+		 }
+		}
+
+=================================================
+22- Fetch Health Centers Details: 
+	Method: GET,
+	URL: /api/v1/app/patients/heath-centers/[Id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Health Center Details Is Fetched Successfully",
+    		"result": 
+		 "data": [
+			 {
+			 "id": int,
+			 "name":"string",
+			 "phones": "string",
+			 "address":"string",
+			 "avatar":"string",
+			 "rating":"string",
+			 "completedAppointment": int,
+			 "type": int,
+			 "city" : {
+				"nameAr" : "string",
+				"nameEn" : "string",
+				}
+			 },
+			 sections: [
+				{
+				 "id": int,
+				 "name": "string",
+				 "description": "string",
+				}
+				],
+			clinics: [
+				{
+				 "id": int,
+				 "name": "string",
+				 "description": "string",
+				}
+				],
+			 doctors: [
+			           {
+			 	"id": int,
+			 	"name": "string",
+			 	"avatar": "string",
+			 	"rating": float,
+				"completedAppointments": int,
+				"degree": {
+					"nameAr": "string",
+					"nameEn": "string"
+					},
+				 "specialism": {
+					"nameAr": "string",
+					"nameEn": "string"
+					},
+			 	 }
+				],
+			]
+		}
+
+=================================================
+23- Fetch Sections:
+	Method: GET,
+	URL: /api/v1/app/patients/sections?page=[int]&health-center=[int],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Sections are Fetched Successfully",
+    		"result": {
+			  "pages": int,
+			  "data": [
+			 	{
+			 	 "id": int,
+			 	 "name": "string",
+			 	 "description": "string",
+				 "healthCenter": "string", ==> health Center Name
+				 "avatar": "string", ==> Health Center Avatar
+			 	}
+				]
+			}
+		}
+
+=================================================
+24- Fetch Clinics:
+	Method: GET,
+	URL: /api/v1/app/patients/clinics?page=[int]&health-center=[int]&section=[int]&specialism=[int],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Clinics are Fetched Successfully",
+    		"result": {
+			  "pages": int,
+			  "data": [
+			 	{
+			 	 "id": int,
+			 	 "name": "string",
+			 	 "description": "string",
+				 "healthCenter": "string", ==> health Center Name
+				 "avatar": "string", ==> Health Center Avatar
+			 	}
+				]
+			}
+		}
+
+=================================================
+25- Fetch My Appointments:
+	Method: GET,
+	URL: /api/v1/app/patients/appointments?page=[int]&status=[int]&doctor=[int]&health-center=[int]&section=[int]&clinic=[int]&from=[text]&to=[text],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "Clinics are Fetched Successfully",
+    		"result": {
+			  "pages": int,
+			  "data": [
+			 	{
+			 	 "id": int,
+			 	 "doctor": {
+					"id": int,
+					"name": "string",
+					"avatar": "string",
+					"spcialism":{
+						"nameAr": "string,
+						"nameEn": "string,
+						}
+					},
+				 "status": int,
+				 "date" : Date,
+				 "time" : Time,
+				 "patientName" : "string",
+				 "healthCenter": {
+			 		"id": int,
+					 "name":"string",
+					 "address":"string",
+					 "avatar":"string",
+					 "rating":"string",
+					 "completedAppointment": int,
+					 "type": int,
+					 "city" : {
+						"nameAr" : "string",
+						"nameEn" : "string",
+						},
+					"clinics": [
+						{
+				 		"id": int,
+				 		"name": "string",
+				 		"description": "string",
+						}
+						],
+					 }, ==> health Center Name
+				 "wallet": int,
+				 "price": float
+			 	}
+				]
+			}
+		}
+=================================================
+26- Add Appointment:
+	Method: POST,
+	URL: /api/v1/app/patients/appointments,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		},
+	body: {
+		"name" : "string",
+		"doctorId": int,
+		"clinicId": int,
+		"date":Date,
+		"time":Time,
+		"walletId": int || null,
+		"phone" : int || null,
+		"paymentCode: "string" || null,
+		},
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "the Appointment Was Canceled Successfully",
+    		"result": {}
+		}
+=================================================
+27- Reschedule Appointment:
+	Method: POST,
+	URL: /api/v1/app/patients/appointments/reschedule/[id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		},
+	body: {
+		"date":Date,
+		"time": Time
+		},
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "the Appointment Was Canceled Successfully",
+    		"result": {}
+		}
+=================================================
+28- Cancel Appointment:
+	Method: GET,
+	URL: /api/v1/app/patients/appointments/cancel/[id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		}
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "the Appointment Was Canceled Successfully",
+    		"result": {}
+		}
+=================================================
+29- Rating Appointment:
+	Method: POST,
+	URL: /api/v1/app/patients/appointments/rate/[id],
+	headers: {
+		"Content-Type": "application/json",
+		"Accept-Language": "en-US" or "ar-AR",
+ 		"DeviceToken":"string",
+		"Fingerprint": "string",
+		"Authorization":"string"
+		},
+	body: {
+		"rating": int
+		},
+	Sucessful Code: 200,
+	Sucessful Response: {
+    		"message": "the Appointment Was Rated Successfully",
+    		"result": {}
+		}

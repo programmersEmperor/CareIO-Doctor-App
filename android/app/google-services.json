@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "967628853159",
+    "project_id": "careio-1af77",
+    "storage_bucket": "careio-1af77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967628853159:android:eadebecf050601e8107082",
+        "android_client_info": {
+          "package_name": "com.aihealthassistance.ai_health_assistance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZQqG02TVaCrmp4qkoxSU47o-0pT3TOWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967628853159:android:a330cdeecd490392107082",
+        "android_client_info": {
+          "package_name": "com.careio.careio_doctors_version"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZQqG02TVaCrmp4qkoxSU47o-0pT3TOWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
