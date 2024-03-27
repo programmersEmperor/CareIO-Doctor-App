@@ -41,7 +41,7 @@ Map<String, String> en = {
   AppStrings.viewAll: "View All",
   AppStrings.topDoctors: "Top doctors",
   AppStrings.topHospitals: "Top hospitals",
-  AppStrings.aiCardTitle: "Experience the power of AI now",
+  AppStrings.aiCardTitle: "Welcome to the future of medicine with our top doctors. Get advanced treatments for the best care.",
   AppStrings.pickYourPreferredLanguage: "Pick Your Preferred Language",
   AppStrings.appointmentBooked: "Completed appointments",
   AppStrings.appointmentWaiting: "Upcoming appointments",
@@ -83,6 +83,7 @@ Map<String, String> en = {
   AppStrings.findYourDoctor: 'Find your doctor',
   AppStrings.findYourHospital: 'Find your health center',
   AppStrings.myAppointments: 'My Appointments',
+  AppStrings.myHealthCenters: 'My Health Centers',
   AppStrings.hospitals: 'Health centers',
   AppStrings.hospital: 'Hospital',
   AppStrings.clinics: 'Clinics',
@@ -100,7 +101,8 @@ Map<String, String> en = {
   AppStrings.searchInDoctors: 'Search in doctors',
   AppStrings.searchInHealthCenters: 'Search in health centers',
   AppStrings.searchHint: 'Search...',
-  AppStrings.notActiveOnThisDay: 'Not available on this day',
+  AppStrings.notAvailableOnThisDay: 'Not available on this day',
+  AppStrings.notActiveOnThisDay: 'Not active on this day',
   AppStrings.appointments: 'Appointments',
   AppStrings.appointment: 'Appointment',
   AppStrings.completedAppointments: 'Completed Appointments',
@@ -136,6 +138,6 @@ Map<String, String> en = {
   AppStrings.selectTime: "Please select the appointment time",
   AppStrings.insufficientData: "Insufficient Data",
   AppStrings.cannotCompleteOperation: "Cannot complete the operation",
-
-
+  AppStrings.newRequests: "New Requests",
+  AppStrings.accept: "Accept",
 };

@@ -28,7 +28,7 @@ Map<String, String> ar = {
   AppStrings.finalSetup: "الخطوة الاخيرة",
   AppStrings.goodEvening: "مساء الخير",
   AppStrings.goodMorning: "صباح الخير",
-  AppStrings.aiCardTitle: "قم بتجربة ذكائنا الاصطناعي الان",
+  AppStrings.aiCardTitle: "مرحبا في مستقبل الطب مع أطبائنا المتميزين. احصل على علاجات متطورة لأفضل رعاية.",
   AppStrings.startChat: "ابداء المحادثة",
   AppStrings.pharmacies: "الصيدليات",
   AppStrings.doctors: "الأطباء",
@@ -75,6 +75,7 @@ Map<String, String> ar = {
   AppStrings.findYourDoctor: 'اعثر على طبيبك',
   AppStrings.findYourHospital: 'اعثر على المراكز الصحية',
   AppStrings.myAppointments: 'مواعيدي',
+  AppStrings.myHealthCenters: 'المراكز الصحية',
   AppStrings.hospitals: 'المراكز الصحية',
   AppStrings.hospital: 'مستشفى',
   AppStrings.clinics: 'العيادات',
@@ -92,7 +93,8 @@ Map<String, String> ar = {
   AppStrings.searchInDoctors: 'ابحث عن الاطباء',
   AppStrings.searchInHealthCenters: 'ابحث عن المراكز الطبية',
   AppStrings.searchHint: 'ابحث...',
-  AppStrings.notActiveOnThisDay: 'غير متوفر في هذا اليوم',
+  AppStrings.notAvailableOnThisDay: 'غير متوفر في هذا اليوم',
+  AppStrings.notActiveOnThisDay: 'غير ناشط في هذا اليوم',
   AppStrings.appointments: 'مواعيد',
   AppStrings.appointment: 'موعد',
   AppStrings.completedAppointments: 'مواعيد ناجحة',
@@ -128,5 +130,8 @@ Map<String, String> ar = {
   AppStrings.selectTime: "الرجاء تحديد وقت الموعد",
   AppStrings.insufficientData: "البيانات غير مكتلمة",
   AppStrings.cannotCompleteOperation: "لايمكن اكمال العملية",
+  AppStrings.newRequests: "الطلبات الجديدة",
+  AppStrings.accept: "قبول",
+
 
 };

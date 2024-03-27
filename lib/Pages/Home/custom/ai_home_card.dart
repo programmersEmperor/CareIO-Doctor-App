@@ -90,10 +90,6 @@ class AiHomeCard extends StatelessWidget {
                                     color: Colors.white, fontSize: 12),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 5.0),
-                              child: StackButton(),
-                            ),
                           ],
                         ),
                       ),

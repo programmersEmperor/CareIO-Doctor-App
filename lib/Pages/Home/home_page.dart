@@ -21,22 +21,10 @@ class HomePage extends StatelessWidget {
         height: 39.sp,
         width: 39.sp,
         child: FloatingActionButton(
-          child: Stack(
-            children: [
-              Lottie.asset(
-                'assets/animations/lines.json',
-                fit: BoxFit.fill,
-                height: 10.h,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Icon(
-                    Boxicons.bx_home_circle
-                ),
-              )
-            ],
-          ),
-          onPressed: () => homePageController.showBottomSheet(context),
+          child: Icon(
+              Boxicons.bx_home_smile
+            ),
+          onPressed: () => homePageController.changePage(4),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

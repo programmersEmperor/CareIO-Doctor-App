@@ -1,8 +1,11 @@
 import 'package:careio_doctor_version/Components/SharedWidgets/page_header.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/refresh_indicator_widget.dart';
+import 'package:careio_doctor_version/Constants/MyHealthCenterTypes.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Pages/Home/controller/appointment_controller.dart';
+import 'package:careio_doctor_version/Pages/Home/controller/my_health_centers_controller.dart';
 import 'package:careio_doctor_version/Pages/Home/custom/AppointmentsWidget.dart';
+import 'package:careio_doctor_version/Pages/Home/custom/MyHealthCentersWidget.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +13,15 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
-class MyAppointmentsPage extends StatelessWidget {
-  const MyAppointmentsPage({super.key});
+class MyHealthCentersPage extends StatelessWidget {
+  const MyHealthCentersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    AppointmentController controller = Get.put(AppointmentController());
+    MyHealthCentersController controller = Get.put(MyHealthCentersController());
     return Column(
       children: [
-        PageHeader(heading: AppStrings.myAppointments.tr),
+        PageHeader(heading: AppStrings.myHealthCenters.tr),
         Padding(
           padding: EdgeInsets.only(
             top: 15.sp,
@@ -46,15 +49,8 @@ class MyAppointmentsPage extends StatelessWidget {
                   ),
                   child: TabBar(
                     tabs: [
-                      Tab(
-                        text: AppStrings.upcoming.tr,
-                      ),
-                      Tab(
-                        text: AppStrings.completed.tr,
-                      ),
-                      Tab(
-                        text: AppStrings.canceled.tr,
-                      ),
+                      Tab(text: AppStrings.myHealthCenters.tr),
+                      Tab(text: AppStrings.newRequests.tr)
                     ],
                     controller: controller.tabController,
                     indicator: BoxDecoration(
@@ -79,44 +75,27 @@ class MyAppointmentsPage extends StatelessWidget {
             controller: controller.tabController,
             children: [
               Obx(
-                () => RefreshWidget(
-                  onRefresh: () => controller.initializeAppointments(status: AppointmentTypes.upcoming),
-                  isLoading: controller.isLoading[AppointmentTypes.upcoming.index],
-                  child: AppointmentsWidget(
-                    appointments: controller.upcomingAppointments,
-                    onRefresh: () => controller.initializeAppointments(
-                        status: AppointmentTypes.upcoming),
-                    isLoading:
-                        controller.isLoading[AppointmentTypes.upcoming.index],
+                    () => RefreshWidget(
+                      onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.confirmed),
+                      isLoading: controller.isLoading[MyHealthCenterTypes.confirmed.index],
+                      child: MyHealthCentersWidget(
+                          myHealthCenters: controller.myConfirmedHealthCenters,
+                          onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.confirmed),
+                          isLoading: controller.isLoading[MyHealthCenterTypes.confirmed.index].value,
                   ),
                 ),
               ),
               Obx(
-                () => RefreshWidget(
-                  onRefresh: () => controller.initializeAppointments(
-                    status: AppointmentTypes.completed,
-                  ),
-                  isLoading: controller.isLoading[AppointmentTypes.completed.index],
-                  child: AppointmentsWidget(
-                    appointments: controller.completedAppointments,
-                    onRefresh: () => controller.initializeAppointments(
-                        status: AppointmentTypes.completed),
-                    isLoading: controller.isLoading[AppointmentTypes.completed.index],
-                  ),
-                ),
-              ),
-              Obx(
-                () => RefreshWidget(
-                  onRefresh: () => controller.initializeAppointments(
-                    status: AppointmentTypes.canceled,
-                  ),
-                  isLoading: controller.isLoading[AppointmentTypes.canceled.index],
-                  child: AppointmentsWidget(
-                    appointments: controller.canceledAppointments,
-                    onRefresh: () => controller.initializeAppointments(status: AppointmentTypes.canceled),
-                    isLoading: controller.isLoading[AppointmentTypes.canceled.index],
-                  ),
-                ),
+                    () => RefreshWidget(
+                      onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.request),
+                      isLoading: controller.isLoading[MyHealthCenterTypes.request.index],
+                      child: MyHealthCentersWidget(
+                        myHealthCenters: controller.healthCentersRequests,
+                        onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.request),
+                        isLoading: controller.isLoading[MyHealthCenterTypes.request.index].value,
+                        isRequests: true,
+                      ),
+                    ),
               ),
             ],
           ),

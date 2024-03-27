@@ -151,7 +151,7 @@ class TopRequestedDoctorsCard extends StatelessWidget {
                 ],
               ),
               MainColoredButton(
-                text: AppStrings.bookNow.tr,
+                text: AppStrings.showMore.tr,
                 elevation: 0,
                 onPress: ()=> Get.toNamed(DoctorProfile.id, arguments: [
                   {'index': doctor.id.toString()}

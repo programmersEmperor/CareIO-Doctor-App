@@ -4,7 +4,7 @@ import 'package:careio_doctor_version/Routing/app_routes.dart';
 import 'package:careio_doctor_version/Services/BindingService/bindings.dart';
 import 'package:careio_doctor_version/Services/NotificationService/notification_service_handler.dart';
 import 'package:careio_doctor_version/Theme/theme_provider.dart';
-import 'package:careio_doctor_version/Utils/appointment_enum.dart';
+import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:careio_doctor_version/Utils/scroll_behavior.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

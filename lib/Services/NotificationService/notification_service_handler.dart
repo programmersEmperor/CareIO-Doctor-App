@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:careio_doctor_version/Pages/Home/controller/appointment_controller.dart';
 import 'package:careio_doctor_version/Services/CachingService/user_session.dart';
-import 'package:careio_doctor_version/Utils/appointment_enum.dart';
+import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:careio_doctor_version/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

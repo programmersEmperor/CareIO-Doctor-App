@@ -74,6 +74,7 @@ class AppStrings {
   static const hospitals = 'hospitals';
   static const hospital = 'hospital';
   static const myAppointments = 'myAppointments';
+  static const myHealthCenters = 'myHealthCenters';
   static const clinics = 'clinics';
   static const clinic = 'clinic';
   static const location = 'location';
@@ -91,6 +92,7 @@ class AppStrings {
   static const searchHint = 'searchHint';
   static const connectionError = 'No internet';
   static const connectionErrorDesc = 'it seems your not connected to the internet please connect and try again';
+  static const notAvailableOnThisDay = 'notAvailableOnThisDay';
   static const notActiveOnThisDay = 'notActiveOnThisDay';
   static const appointments = 'appointments';
   static const appointment = 'appointment';
@@ -126,4 +128,6 @@ class AppStrings {
   static const selectTime = 'selectTime';
   static const insufficientData = "insufficientData";
   static const cannotCompleteOperation = "cannotCompleteOperation";
+  static const newRequests = "newRequests";
+  static const accept = "accept";
 }

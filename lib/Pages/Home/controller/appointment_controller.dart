@@ -5,14 +5,13 @@ import 'package:careio_doctor_version/Pages/Home/custom/rating_bottom_sheet_widg
 import 'package:careio_doctor_version/Pages/Home/custom/reschedule_appointment_sheet.dart';
 import 'package:careio_doctor_version/Services/Api/appointment.dart';
 import 'package:careio_doctor_version/Services/NotificationService/notification_service_handler.dart';
-import 'package:careio_doctor_version/Utils/appointment_enum.dart';
+import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:careio_doctor_version/Utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppointmentController extends GetxController
     with GetTickerProviderStateMixin {
-  late List<Widget> tabs;
   late TabController tabController;
   RxList<Appointment> appointments = <Appointment>[].obs;
 
@@ -37,27 +36,11 @@ class AppointmentController extends GetxController
       .toList()
       .obs;
 
-  List<int> pages = [1, 1, 1];
   List<RxBool> isLoading = [false.obs, false.obs, false.obs];
 
   @override
   void onInit() async {
-    tabs = [
-      Tab(
-        text: AppStrings.upcoming.tr,
-        //  height: 30.sp,
-      ),
-      Tab(
-        text: AppStrings.completed.tr,
-        //    height: 30.sp,
-      ),
-      Tab(
-        text: AppStrings.canceled.tr,
-        //    height: 30.sp,
-      ),
-    ];
-
-    tabController = TabController(length: tabs.length, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
 
     initializeAppointments();
 

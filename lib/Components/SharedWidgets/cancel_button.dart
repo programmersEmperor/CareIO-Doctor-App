@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-class AppointmentCancelButton extends StatelessWidget {
-  const AppointmentCancelButton({
+class CancelButton extends StatelessWidget {
+  const CancelButton({
     super.key,
     required this.onTap,
   });

@@ -276,7 +276,7 @@ class RescheduleAppointmentConfirmSheet extends StatelessWidget {
                               ? Center(
                                 child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 15),
-                                child: Text(AppStrings.notActiveOnThisDay.tr, style: TextStyle(fontSize: 8.sp),)
+                                child: Text(AppStrings.notAvailableOnThisDay.tr, style: TextStyle(fontSize: 8.sp),)
                               ),
                             ) : Wrap(
                                   key: const ValueKey<int>(5),

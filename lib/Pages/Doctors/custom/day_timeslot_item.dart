@@ -45,7 +45,7 @@ class DayTimeSLotItem extends StatelessWidget {
                           ? Colors.white
                           : AppColors.primaryColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 9.sp),
+                      fontSize: 8.sp),
                 ),
               ),
             ),

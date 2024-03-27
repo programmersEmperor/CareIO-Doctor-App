@@ -1,7 +1,7 @@
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Models/Doctor.dart';
 import 'package:careio_doctor_version/Models/HealthCenter.dart';
-import 'package:careio_doctor_version/Utils/appointment_enum.dart';
+import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:intl/intl.dart';
 
 /// id : 10

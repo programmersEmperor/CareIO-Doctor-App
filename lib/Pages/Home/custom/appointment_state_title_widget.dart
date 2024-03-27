@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:careio_doctor_version/Models/Appointment.dart';
-import 'package:careio_doctor_version/Utils/appointment_enum.dart';
+import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

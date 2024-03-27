@@ -11,6 +11,7 @@ import 'package:careio_doctor_version/Pages/Home/custom/ai_intro_bottom_sheet.da
 import 'package:careio_doctor_version/Pages/Home/custom/map_bottom_sheet.dart';
 import 'package:careio_doctor_version/Pages/Home/home_main_page.dart';
 import 'package:careio_doctor_version/Pages/Home/my_appoinments_page.dart';
+import 'package:careio_doctor_version/Pages/Home/my_health_centers_page.dart';
 import 'package:careio_doctor_version/Pages/Notifications/notifications_page.dart';
 import 'package:careio_doctor_version/Pages/Profile/profile_page.dart';
 import 'package:careio_doctor_version/Services/Api/home.dart';
@@ -25,10 +26,10 @@ import 'package:sizer/sizer.dart';
 
 class HomePageController extends GetxController
     with GetTickerProviderStateMixin {
-  RxInt activePage = 0.obs;
+  RxInt activePage = 4.obs;
   Rx<Patient> patient = Get.find<UserSession>().patient.obs;
   final List<IconData> icons = [
-    Boxicons.bx_home_circle,
+    Boxicons.bx_buildings,
     Boxicons.bx_calendar,
     Boxicons.bx_bell,
     Boxicons.bx_user,
@@ -46,10 +47,11 @@ class HomePageController extends GetxController
   late HomeAnimationHandler animationHandler;
 
   List<dynamic> pages = [
-    const HomeMainPage(),
+    const MyHealthCentersPage(),
     const MyAppointmentsPage(),
     const NotificationsPage(),
     const ProfilePage(),
+    const HomeMainPage(),
   ];
   late HomeInfo homeInfo;
 

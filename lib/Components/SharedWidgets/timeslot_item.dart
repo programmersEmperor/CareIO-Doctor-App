@@ -5,10 +5,16 @@ import 'package:sizer/sizer.dart';
 class TimeSlotItem extends StatelessWidget {
   final bool isDisabled;
   final String time;
+  final Color backgroundColor;
+  final Color fontColor;
+  final Color? iconColor;
   const TimeSlotItem({
     super.key,
     this.isDisabled = false,
     required this.time,
+    this.backgroundColor = Colors.white,
+    this.fontColor = Colors.black54,
+    this.iconColor
   });
 
   @override
@@ -19,14 +25,14 @@ class TimeSlotItem extends StatelessWidget {
         label: Text(
           time,
         ),
-        labelStyle: TextStyle(fontSize: 7.5.sp, color: Colors.black54),
+        labelStyle: TextStyle(fontSize: 7.5.sp, color: fontColor),
         avatar: Icon(
           Icons.watch_later_outlined,
-          color: AppColors.primaryColor,
+          color: iconColor ?? AppColors.primaryColor,
           size: 15.sp,
         ),
         onPressed: isDisabled ? null : () {},
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         disabledColor: Colors.grey.shade200,
       ),
     );

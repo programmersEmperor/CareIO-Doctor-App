@@ -23,9 +23,7 @@ class DoctorProfileUiController extends GetxController {
   RxBool enableAnimation = false.obs;
   late DoctorDetails doctor;
   final apiService = Get.find<DoctorsApiService>();
-
   RxInt currentSelectedIndex = 0.obs;
-
   RxBool isLoading = false.obs;
 
   void showBookingModal() {
@@ -36,16 +34,6 @@ class DoctorProfileUiController extends GetxController {
         100.h);
   }
 
-  var activeTimeSlotWidget = const Wrap().obs;
-
-  List<Wrap> timeslotsWidgets = [];
-  List<TimeSlotItem> timeslotsItems = [];
-  List<ActiveTimes> timeSlots = [];
-
-  RxList activeDayTimeSlot = [].obs;
-
-  void addTimeSlot({required int id, required List<String> timeSlots}) {}
-
   final List<DayTimeSlot> dayTimeSlotList = [
     DayTimeSlot('Sun', true.obs),
     DayTimeSlot('Mon', false.obs),
@@ -55,26 +43,6 @@ class DoctorProfileUiController extends GetxController {
     DayTimeSlot('Fri', false.obs),
     DayTimeSlot('Sat', false.obs),
   ];
-
-  Wrap setTimeSlots(int index) {
-    timeslotsItems.clear();
-    for (var time in timeSlots) {
-      if (time.day == index) {
-        timeslotsItems.add(TimeSlotItem(time: "${time.from} - ${time.to}"));
-      }
-    }
-
-    return Wrap(
-      children: timeslotsItems.isNotEmpty ? timeslotsItems : [
-        Center(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Text(AppStrings.notActiveOnThisDay.tr, style: TextStyle(fontSize: 8.sp),)
-          ),
-        )
-      ],
-    );
-  }
 
   int calculateDoctorExperience(DoctorDetails doctor){
     int experienceTotal = 0;
@@ -87,7 +55,6 @@ class DoctorProfileUiController extends GetxController {
   }
 
   void onTapDayTimeSlot(int index) {
-    activeTimeSlotWidget(setTimeSlots(index));
     if (currentSelectedIndex.value == index) return;
     dayTimeSlotList[index].setIsSelected = true;
     dayTimeSlotList[currentSelectedIndex.value].setIsSelected = false;
@@ -104,10 +71,6 @@ class DoctorProfileUiController extends GetxController {
     if (!await launchUrl(Uri.parse('tel:${doctor.phone}'))) {
       throw Exception('Could not launch ');
     }
-  }
-
-  void showTimeslots({required HealthCenter healthCenter}) {
-    if (healthCenter.activeTimes == null) return;
   }
 
   List<HealthCenter> filterHealthCentersByDay({required List<HealthCenter> healthCenters, required int day, int? clinicId}){
