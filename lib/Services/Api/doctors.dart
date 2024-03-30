@@ -14,7 +14,7 @@ class DoctorsApiService {
         isLoading(true);
       });
       var response = await _apiService.getRequest(
-        url: 'patients/doctors?page=$pageSize',
+        url: '/doctors?page=$pageSize',
         params: params,
       );
 
@@ -32,7 +32,7 @@ class DoctorsApiService {
 
   Future<dynamic> showDoctor({required String id}) async {
     try {
-      var response = await _apiService.getRequest(url: 'patients/doctors/$id');
+      var response = await _apiService.getRequest(url: '/doctors/$id');
 
       return response;
     } catch (e) {

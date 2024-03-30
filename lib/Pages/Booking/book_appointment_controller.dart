@@ -136,7 +136,7 @@ class BookAppointmentController extends GetxController {
       if (wallet.id != -1 && !key.currentState!.saveAndValidate()) return;
 
       var body = {
-        "name": nameController.text.isEmpty? Get.find<UserSession>().patient.name : nameController.text,
+        "name": nameController.text.isEmpty? Get.find<UserSession>().doctorUser.name : nameController.text,
         "doctorId": doctorId,
         "clinicId": clinicId,
         "time": selectedTime.value.time,

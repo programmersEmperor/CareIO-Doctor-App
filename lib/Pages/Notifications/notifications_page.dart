@@ -47,34 +47,5 @@ class NotificationsPage extends StatelessWidget {
         ],
       ),
     );
-
-
-    // return RefreshWidget(
-    //   onRefresh: controller.fetchNotifications,
-    //   isLoading: controller.isLoading,
-    //   child: ListView(
-    //     padding: EdgeInsets.zero,
-    //     children: [
-    //       PageHeader(heading: AppStrings.notification.tr),
-    //       ListView.builder(
-    //         itemCount: controller.notifications.isEmpty
-    //             ? 1
-    //             : controller.notifications.length,
-    //         shrinkWrap: true,
-    //         physics: const NeverScrollableScrollPhysics(),
-    //         padding: EdgeInsets.all(10.sp),
-    //         itemBuilder: (_, index) {
-    //           if (controller.notifications.isEmpty) {
-    //             return NoDataWidget(message: AppStrings.noNotification.tr);
-    //           } else {
-    //             return NotificationCard(
-    //               notification: controller.notifications[index],
-    //             );
-    //           }
-    //         },
-    //       )
-    //     ],
-    //   ),
-    // );
   }
 }

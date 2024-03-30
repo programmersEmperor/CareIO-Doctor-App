@@ -10,7 +10,7 @@ class HomeApiService {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: '/patients/home',
+        url: '/home',
         params: body,
       );
       isLoading(false);

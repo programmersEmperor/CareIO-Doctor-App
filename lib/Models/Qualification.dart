@@ -1,44 +1,38 @@
-class Qualifications {
-  Qualifications({
+class Qualification {
+  Qualification({
     required int id,
-    required String place,
-    required String position,
-    required String from,
-    required String to,
+    required String title,
+    required String source,
+    required String date,
   }) {
     _id = id;
-    _place = place;
-    _position = position;
-    _from = from;
-    _to = to;
+    _title = title;
+    _source = source;
+    _date = date;
   }
 
-  Qualifications.fromJson(dynamic json) {
+  Qualification.fromJson(dynamic json) {
     _id = json['id'];
-    _place = json['place'];
-    _position = json['position'];
-    _from = json['from'];
-    _to = json['to'];
+    _title = json['title'];
+    _source = json['source'];
+    _date = json['date'];
   }
   int? _id;
-  String? _place;
-  String? _position;
-  String? _from;
-  String? _to;
+  String? _title;
+  String? _source;
+  String? _date;
 
   int? get id => _id;
-  String? get place => _place;
-  String? get position => _position;
-  String? get from => _from;
-  String? get to => _to;
+  String? get title => _title;
+  String? get source => _source;
+  String? get date => _date;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['place'] = _place;
-    map['position'] = _position;
-    map['from'] = _from;
-    map['to'] = _to;
+    map['title'] = _title;
+    map['source'] = _source;
+    map['date'] = _date;
     return map;
   }
 }

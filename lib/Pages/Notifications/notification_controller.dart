@@ -47,7 +47,6 @@ class NotificationController extends GetxController {
     pagingController.addPageRequestListener((pageKey) {
       fetchNotifications(pageKey: pageKey);
     });
-    // fetchNotifications(pageKey: 1);
     pagingController.refresh();
     super.onInit();
   }

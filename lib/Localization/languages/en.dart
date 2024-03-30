@@ -140,4 +140,5 @@ Map<String, String> en = {
   AppStrings.cannotCompleteOperation: "Cannot complete the operation",
   AppStrings.newRequests: "New Requests",
   AppStrings.accept: "Accept",
+  AppStrings.rating: "Ratings ",
 };

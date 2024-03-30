@@ -10,7 +10,7 @@ class BookAppointmentApiService {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: '/patients/available-doctor-times',
+        url: '/available-doctor-times',
         params: params,
       );
       isLoading(false);
@@ -23,7 +23,7 @@ class BookAppointmentApiService {
   Future<dynamic> bookAppointment({required Map<String, dynamic> body}) async {
     try {
       var response = await _apiService.postRequest(
-        url: '/patients/appointments',
+        url: '/appointments',
         body: body,
       );
 

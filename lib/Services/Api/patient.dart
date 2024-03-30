@@ -10,16 +10,22 @@ class PatientApiService {
   Future<dynamic> update(
       {required String name,
       required File avatar,
-      String? phone,
-      String? email}) async {
+        String? phone,
+        required String description,
+        required int specialismId,
+        required int degreeId,
+      }) async {
     try {
       var response = await _apiService.postRequest(
-          url: 'patients/update',
+          url: '/update',
           body: dio.FormData.fromMap({
             'name': name,
             'avatar': avatar.path.isNotEmpty
                 ? await dio.MultipartFile.fromFile(avatar.path)
                 : null,
+            'specialismId': specialismId,
+            'degreeId': degreeId,
+            'description': description,
           }));
 
       return response;
@@ -31,7 +37,7 @@ class PatientApiService {
   Future<dynamic> getPlans() async {
     try {
       var response =
-          await _apiService.getRequest(url: 'patients/subscription-plans');
+          await _apiService.getRequest(url: '/subscription-plans');
 
       return response;
     } catch (e) {

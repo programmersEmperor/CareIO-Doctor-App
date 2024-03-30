@@ -12,7 +12,7 @@ class HospitalApiService {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: 'patients/health-centers?page=$pageSize',
+        url: '/health-centers?page=$pageSize',
         params: params,
       );
       isLoading(false);
@@ -26,7 +26,7 @@ class HospitalApiService {
   Future<dynamic> showHospital({required String id}) async {
     try {
       var response =
-          await _apiService.getRequest(url: 'patients/health-centers/$id');
+          await _apiService.getRequest(url: '/health-centers/$id');
       return response;
     } catch (e) {
       debugPrint(e.toString());

@@ -21,7 +21,7 @@ class BaseApi {
     Dio client = Dio();
 
     client.options = BaseOptions(
-      baseUrl: 'https://api.careio.app/api/$_apiVersion/app/',
+      baseUrl: 'https://api.careio.app/api/$_apiVersion/app/doctors/',
     );
     client.interceptors.add(ApiInterceptors());
     client.interceptors.add(LogInterceptor(

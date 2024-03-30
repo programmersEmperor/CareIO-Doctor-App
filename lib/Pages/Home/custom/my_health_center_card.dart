@@ -13,6 +13,7 @@ import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:careio_doctor_version/Utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,6 +26,8 @@ import '../../../Components/SharedWidgets/cancel_button.dart';
 class MyHealthCenterCard extends StatefulWidget {
   final int index;
   final HealthCenter myHealthCenter;
+  final Function(HealthCenter)? onAccept;
+  final Function(HealthCenter)? onCancel;
   final bool isRequest;
 
   MyHealthCenterCard({
@@ -32,6 +35,8 @@ class MyHealthCenterCard extends StatefulWidget {
     required this.index,
     required this.myHealthCenter,
     this.isRequest = false,
+    this.onAccept,
+    this.onCancel,
   });
 
   @override
@@ -40,6 +45,7 @@ class MyHealthCenterCard extends StatefulWidget {
 
 class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
   final showDetails = false.obs;
+  final RxBool isLoading = false.obs;
 
   RxInt currentDayTimeSlotSelectedIndex = 0.obs;
 
@@ -62,10 +68,10 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
 
   @override
   Widget build(BuildContext context) {
-    final MyHealthCentersController controller = Get.find<MyHealthCentersController>();
     return Padding(
       padding: EdgeInsets.only(top: 15.sp, left: 10.sp, right: 10.sp),
-      child: Card(
+      child: Obx(()=> Opacity(opacity: isLoading.isTrue? 0.7 : 1, child: Card(
+
         elevation: 15,
         shadowColor: Colors.grey.shade100,
         color: Colors.white,
@@ -79,7 +85,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 5.sp
+                    horizontal: 5.sp
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,9 +116,9 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: widget.myHealthCenter.avatar == null? null : DecorationImage(
-                                image: CachedNetworkImageProvider(widget.myHealthCenter.avatar!),
-                                fit: BoxFit.cover,
-                              ),
+                          image: CachedNetworkImageProvider(widget.myHealthCenter.avatar!),
+                          fit: BoxFit.cover,
+                        ),
                         color: AppColors.secondaryColor,
                       ),
                       child: widget.myHealthCenter.avatar == null ? ClipRRect(
@@ -216,7 +222,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                 ),
               ),
               Obx(
-                () => AnimatedSize(
+                    () => AnimatedSize(
                   duration: 600.milliseconds,
                   curve: Curves.linearToEaseOut,
                   child: Container(
@@ -225,53 +231,53 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                     child: showDetails.isFalse
                         ? null
                         : Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.sp),
-                                child: SizedBox(
-                                  height: 5.h,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: dayTimeSlotList.length,
-                                    itemBuilder: (_, index) =>
-                                        DayTimeSLotItem(
-                                          dayTimeSlot: dayTimeSlotList[index],
-                                          onTap: () => onTapDayTimeSlot(index),
-                                        ),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.sp),
+                          child: SizedBox(
+                            height: 5.h,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: dayTimeSlotList.length,
+                              itemBuilder: (_, index) =>
+                                  DayTimeSLotItem(
+                                    dayTimeSlot: dayTimeSlotList[index],
+                                    onTap: () => onTapDayTimeSlot(index),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5.sp),
-                                child: Obx(
-                                        (){
-                                      // final List<HealthCenter> healthCenters = controller.filterHealthCentersByDay(healthCenters: controller.doctor.healthCenters, day: controller.currentSelectedIndex.value);
-                                      return AnimatedSwitcher(
-                                        duration: 300.milliseconds,
-                                        child: Column(
-                                          children: [
-                                            DoctorHealthCenterActiveTimeWidget(
-                                                healthCenter: widget.myHealthCenter,
-                                                day: currentDayTimeSlotSelectedIndex.value,
-                                                showHealthCenterCard: false,
-                                                fallback: Center(
-                                                  child: Padding(
-                                                      padding: const EdgeInsets.symmetric(vertical: 15),
-                                                      child: Text(AppStrings.notActiveOnThisDay.tr, style: TextStyle(fontSize: 8.sp),)
-                                                  ),
-                                                )
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5.sp),
+                          child: Obx(
+                                  (){
+                                // final List<HealthCenter> healthCenters = controller.filterHealthCentersByDay(healthCenters: controller.doctor.healthCenters, day: controller.currentSelectedIndex.value);
+                                return AnimatedSwitcher(
+                                  duration: 300.milliseconds,
+                                  child: Column(
+                                    children: [
+                                      DoctorHealthCenterActiveTimeWidget(
+                                          healthCenter: widget.myHealthCenter,
+                                          day: currentDayTimeSlotSelectedIndex.value,
+                                          showHealthCenterCard: false,
+                                          fallback: Center(
+                                            child: Padding(
+                                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                                child: Text(AppStrings.notActiveOnThisDay.tr, style: TextStyle(fontSize: 8.sp),)
+                                            ),
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -302,7 +308,19 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          try{
+                            if(widget.onAccept != null && isLoading.isFalse) {
+                              isLoading(true);
+                              await widget.onAccept!(widget.myHealthCenter);
+                              isLoading(false);
+                            }
+                          }
+                          catch(e){
+                            isLoading(false);
+                            showSnack(title: AppStrings.cannotCompleteOperation, description: "${e}");
+                          }
+                        },
                         style: ButtonStyle(
                             elevation: const MaterialStatePropertyAll(0),
                             backgroundColor: MaterialStatePropertyAll(
@@ -313,8 +331,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                                     BorderRadius.circular(10.sp)))),
                         child: Text(
                           AppStrings.accept.tr,
-                          style: TextStyle(
-                              fontSize: 8.sp, fontWeight: FontWeight.w800),
+                          style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w800),
                         ),
                       ),
                     ),
@@ -323,7 +340,19 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                     ),
                     Expanded(
                       child: CancelButton(
-                        onTap: () {},
+                        onTap: () async {
+                          try{
+                            if(widget.onAccept != null && isLoading.isFalse) {
+                              isLoading(true);
+                              await widget.onAccept!(widget.myHealthCenter);
+                              isLoading(false);
+                            }
+                          }
+                          catch(e){
+                            isLoading(false);
+                            showSnack(title: AppStrings.cannotCompleteOperation, description: "${e}");
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -335,7 +364,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
             ],
           ),
         ),
-      ),
+      ),)),
     );
   }
 }

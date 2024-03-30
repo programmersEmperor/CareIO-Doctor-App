@@ -130,4 +130,5 @@ class AppStrings {
   static const cannotCompleteOperation = "cannotCompleteOperation";
   static const newRequests = "newRequests";
   static const accept = "accept";
+  static const rating = "rating";
 }

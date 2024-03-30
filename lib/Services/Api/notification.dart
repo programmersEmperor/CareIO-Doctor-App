@@ -11,7 +11,7 @@ class NotificationApiService {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: '/patients/notifications',
+        url: '/notifications',
         params: params,
       );
       isLoading(false);

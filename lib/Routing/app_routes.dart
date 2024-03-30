@@ -1,5 +1,3 @@
-import 'package:careio_doctor_version/Pages/AiAssistance/chatbot_page.dart';
-import 'package:careio_doctor_version/Pages/Authentication/completeSetup/complete_setup.dart';
 import 'package:careio_doctor_version/Pages/Authentication/forgetPassword/forget_password_page.dart';
 import 'package:careio_doctor_version/Pages/Authentication/login/loginPage.dart';
 import 'package:careio_doctor_version/Pages/Authentication/newPassword/newPassword.dart';
@@ -37,7 +35,6 @@ class AppRoutes {
       ),
     ),
     GetPage(name: SignupPage.id, page: () => const SignupPage()),
-    GetPage(name: ChatBotPage.id, page: () => const ChatBotPage()),
     GetPage(name: HospitalsPage.id, page: () => const HospitalsPage()),
     GetPage(
       name: PharmacyProfile.id,
@@ -58,10 +55,6 @@ class AppRoutes {
     GetPage(
       name: ProfilePage.id,
       page: () => const ProfilePage(),
-    ),
-    GetPage(
-      name: CompleteSetup.id,
-      page: () => const CompleteSetup(),
     ),
     GetPage(
       name: PharmaciesPage.id,

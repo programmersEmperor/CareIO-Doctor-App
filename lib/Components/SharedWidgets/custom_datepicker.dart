@@ -8,12 +8,18 @@ import 'package:sizer/sizer.dart';
 typedef SelectableDayPredicate = bool Function(DateTime day);
 
 class CustomDatePicker extends StatelessWidget {
+  final DateTime? firstDate;
+  final DateTime? lastDate;
+  final DateTime? initialDate;
   final Function onDateChange;
   final SelectableDayPredicate selectableDayPredicate;
   const CustomDatePicker({
     super.key,
     required this.onDateChange,
     required this.selectableDayPredicate,
+    this.firstDate,
+    this.lastDate,
+    this.initialDate
   });
 
   @override
@@ -40,9 +46,9 @@ class CustomDatePicker extends StatelessWidget {
               ),
               child: CalendarDatePicker(
                 selectableDayPredicate: selectableDayPredicate,
-                initialDate: null,
-                firstDate: DateTime(DateTime.now().year),
-                lastDate: DateTime(DateTime.now().year + 50),
+                initialDate: initialDate,
+                firstDate: firstDate ?? DateTime(DateTime.now().year),
+                lastDate: lastDate ?? DateTime(DateTime.now().year + 50),
                 onDateChanged: (date) {
                   onDateChange(date);
                 },

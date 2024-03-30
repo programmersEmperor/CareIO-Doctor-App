@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:careio_doctor_version/Localization/localization_helper.dart';
+import 'package:careio_doctor_version/Models/Degree.dart';
+import 'package:careio_doctor_version/Models/DoctorDetails.dart';
 import 'package:careio_doctor_version/Models/Plan.dart';
 import 'package:careio_doctor_version/Models/Specialism.dart';
 import 'package:careio_doctor_version/Models/Wallet.dart';
@@ -10,74 +12,64 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class UserSession {
-  static const _patientBox = 'patientBox';
-  static const _patientKey = 'patientKey';
+  static const _doctorBox = 'doctorBox';
+  static const _doctorKey = 'doctorKey';
   static const _tokenKey = 'tokenKey';
   static const _localeKey = 'localeKey';
-  static const _openedChatKey = 'openedChatKey';
+  // static const _openedChatKey = 'openedChatKey';
   String firebaseDeviceToken = '';
 
   String token = '';
-  late Patient patient;
+  late DoctorDetails doctorUser;
   List<Wallet> wallets = [];
-  List<Plan> plans = [
-    Plan(
-        id: 150,
-        descriptionAr: "Description",
-        price: 1300,
-        titleAr: "برميوم",
-        titleEn: "Premium"),
-  ];
   List<Specialism> specializations = [];
+  List<Degree> degrees = [];
   late Box box;
   bool userOpenedChat = false;
 
-  Future<bool> savePatient(Map<String, dynamic> data) async {
-    box = await Hive.openBox(_patientBox);
+  Future<bool> saveDoctorUser(Map<String, dynamic> data) async {
+    box = await Hive.openBox(_doctorBox);
     if (!box.isOpen) return false;
-    patient = Patient.fromJsonMap(data['patient']);
-    debugPrint("UserPhone is ${patient.phone}");
-    await box.put(_patientKey, jsonEncode(data['patient']));
-    debugPrint("Saved token $token");
+
+    doctorUser = DoctorDetails.fromJson(data['doctor']);
+    await box.put(_doctorKey, jsonEncode(data['doctor']));
+
     token = data['token'];
     await box.put(_tokenKey, token);
     await box.close();
+
+    debugPrint("token ${data['token']}");
+    debugPrint("UserPhone is ${doctorUser.phone}");
+
     return true;
   }
 
-  Future<void> updatePatient() async {
-    box = await Hive.openBox(_patientBox);
+  Future<void> updateDoctorUser() async {
+    box = await Hive.openBox(_doctorBox);
     if (!box.isOpen) return;
 
-    await box.put(_patientKey, jsonEncode(patient));
+    await box.put(_doctorKey, jsonEncode(doctorUser));
     await box.close();
-    debugPrint("Patient name is ${patient.name}");
+    debugPrint("Doctor name is ${doctorUser.name}");
   }
 
-  Future<void> setUserOpenChat() async {
-    box = await Hive.openBox(_patientBox);
-    if (!box.isOpen) return;
-
-    await box.put(_openedChatKey, true);
-    await box.close();
-    debugPrint("Patient opened the chat is true");
-  }
-
-  Future<bool> getPatient() async {
-    box = await Hive.openBox(_patientBox);
+  Future<bool> getDoctorUser() async {
+    box = await Hive.openBox(_doctorBox);
     if (!box.isOpen || box.isEmpty) return false;
+
     token = await box.get(_tokenKey);
+    doctorUser = DoctorDetails.fromJson(jsonDecode(await box.get(_doctorKey)));
+
     debugPrint("Token is $token");
-    patient = Patient.fromJsonMap(jsonDecode(await box.get(_patientKey)));
-    userOpenedChat = await box.get(_openedChatKey) ?? false;
-    debugPrint("Patient is ${patient.toJson()}");
+    debugPrint("Doctor is ${doctorUser.toJson()}");
+
     await box.close();
     return true;
   }
 
-  Future<bool> logoutPatient() async {
+  Future<bool> logout() async {
     try {
-      box = await Hive.openBox(_patientBox);
+      box = await Hive.openBox(_doctorBox);
       if (!box.isOpen) return false;
       box.clear();
       await box.close();
@@ -89,7 +81,7 @@ class UserSession {
   }
 
   void saveLocale(Locale locale) async {
-    box = await Hive.openBox(_patientBox);
+    box = await Hive.openBox(_doctorBox);
     if (!box.isOpen) return;
     await box.put(_localeKey, locale.languageCode);
     debugPrint("Locale ${locale.languageCode} is Saved");
@@ -97,7 +89,7 @@ class UserSession {
   }
 
   Future<Locale> getLocale() async {
-    box = await Hive.openBox(_patientBox);
+    box = await Hive.openBox(_doctorBox);
     if (!box.isOpen || box.isEmpty) return Get.deviceLocale!;
     var langCode = await box.get(_localeKey);
     debugPrint("Locale $langCode retrieved from cache");

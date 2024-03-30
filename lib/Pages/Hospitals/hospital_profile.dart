@@ -397,23 +397,23 @@ class HospitalProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // Positioned(
-                      //   bottom: 0,
-                      //   left: 0,
-                      //   right: 0,
-                      //   child: Center(
-                      //     child: SizedBox(
-                      //       width: 90.w,
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.symmetric(vertical: 20),
-                      //         child: MainColoredButton(
-                      //           text: AppStrings.bookNow.tr,
-                      //           onPress: () {},
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: SizedBox(
+                            width: 90.w,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: MainColoredButton(
+                                text: AppStrings.bookNow.tr,
+                                onPress: () {},
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
           ),

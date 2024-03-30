@@ -53,7 +53,7 @@ class ApiInterceptors extends Interceptor {
       }
 
       if (err.response != null && err.response?.statusCode == 401) {
-        if (await Get.find<UserSession>().logoutPatient()) {
+        if (await Get.find<UserSession>().logout()) {
           Get.offAll(() => const IntroductionPage());
         }
       }

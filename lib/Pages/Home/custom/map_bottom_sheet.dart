@@ -1,5 +1,4 @@
 import 'package:careio_doctor_version/Components/SharedWidgets/main_colored_button.dart';
-import 'package:careio_doctor_version/Pages/AiAssistance/chatbot_page.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +36,6 @@ class MapBottomSheet extends StatelessWidget {
                     text: "Save location",
                     onPress: () {
                       Get.close(0);
-                      Get.toNamed(ChatBotPage.id);
                     }),
               ),
               SizedBox(

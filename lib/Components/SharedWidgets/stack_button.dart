@@ -1,5 +1,4 @@
 import 'package:careio_doctor_version/Localization/app_strings.dart';
-import 'package:careio_doctor_version/Pages/AiAssistance/chatbot_page.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ class StackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Get.toNamed(ChatBotPage.id);
       },
       style: ButtonStyle(
         maximumSize: MaterialStatePropertyAll(Size(

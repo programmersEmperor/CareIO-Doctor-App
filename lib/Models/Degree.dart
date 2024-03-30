@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 
 class Degree {
   Degree({
-    String? nameAr,
-    String? nameEn,
+    required int id,
+    required String nameAr,
+    required String nameEn,
   }) {
+    _id = id;
     _nameAr = nameAr;
     _nameEn = nameEn;
   }
@@ -17,13 +19,13 @@ class Degree {
     _nameEn = json['nameEn'];
   }
   late int _id;
-  String? _nameAr;
-  String? _nameEn;
+  late String _nameAr;
+  late String _nameEn;
 
   int get id => _id;
-  String? get nameAr => _nameAr;
-  String? get nameEn => _nameEn;
-  String? get name => Get.locale == const Locale('en', 'US') ? nameEn : nameAr;
+  String get nameAr => _nameAr;
+  String get nameEn => _nameEn;
+  String get name => Get.locale == const Locale('en', 'US') ? nameEn : nameAr;
 
 
   Map<String, dynamic> toJson() {

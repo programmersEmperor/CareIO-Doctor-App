@@ -1,3 +1,4 @@
+import 'package:careio_doctor_version/Components/SharedWidgets/custom_datepicker.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,16 +15,23 @@ class TextInputField extends StatelessWidget {
   final bool required;
   final Color backgroundColor;
   final TextEditingController? controller;
+  final bool isEnabled;
+  final Widget? prefix;
+  final int maxLines;
 
   const TextInputField(
       {super.key,
-      required this.name,
-      this.required = false,
-      this.inputType = TextInputType.text,
-      this.password = false,
-      this.backgroundColor = CupertinoColors.systemGrey5,
-      this.enableLabel = true,
-      this.controller});
+        required this.name,
+        this.required = false,
+        this.inputType = TextInputType.text,
+        this.password = false,
+        this.backgroundColor = CupertinoColors.systemGrey5,
+        this.enableLabel = true,
+        this.controller,
+        this.isEnabled = true,
+        this.prefix,
+        this.maxLines = 1,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +44,9 @@ class TextInputField extends StatelessWidget {
     return SizedBox(
       child: Obx(
         () => FormBuilderTextField(
+          enabled: isEnabled,
           name: name.trim(),
+          maxLines: maxLines,
           controller: controller,
           obscureText: showPassword.value,
           maxLength: inputType == TextInputType.phone ? 9 : null,
@@ -80,7 +90,7 @@ class TextInputField extends StatelessWidget {
           decoration: InputDecoration(
             counter: const SizedBox(),
             isDense: true,
-            prefix: const SizedBox(),
+            prefix: prefix,
             suffixIcon: password
                 ? SizedBox(
                     height: 5.h,

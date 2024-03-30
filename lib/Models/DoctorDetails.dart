@@ -17,7 +17,7 @@ class DoctorDetails {
     required Degree degree,
     required Specialism specialism,
     required List<Experience> experience,
-    required List<Qualifications> qualifications,
+    required List<Qualification> qualifications,
   }) {
     _id = id;
     _name = name;
@@ -39,7 +39,7 @@ class DoctorDetails {
     _avatar = json['avatar'];
     _rating = json['rating'];
     _phone = json['phone'];
-    _isRecommended = json['isRecommended'];
+    _isRecommended = json['isRecommended'] == 1;
     _description = json['description'];
     _completedAppointments = json['completedAppointments'];
     _degree = json['degree'] != null ? Degree.fromJson(json['degree']) : null;
@@ -55,7 +55,7 @@ class DoctorDetails {
     if (json['qualifications'] != null) {
       _qualifications = [];
       json['qualifications'].forEach((v) {
-        _qualifications?.add(Qualifications.fromJson(v));
+        _qualifications?.add(Qualification.fromJson(v));
       });
     }
     if (json['healthCenters'] != null) {
@@ -77,7 +77,7 @@ class DoctorDetails {
   Degree? _degree;
   Specialism? _specialism;
   List<Experience>? _experience;
-  List<Qualifications>? _qualifications;
+  List<Qualification>? _qualifications;
   List<HealthCenter>? _healthCenters;
 
   int? get id => _id;
@@ -91,7 +91,7 @@ class DoctorDetails {
   Degree? get degree => _degree;
   Specialism? get specialism => _specialism;
   List<Experience> get experience => _experience ?? [];
-  List<Qualifications>? get qualifications => _qualifications;
+  List<Qualification>? get qualifications => _qualifications;
   List<HealthCenter> get healthCenters => _healthCenters ?? [];
   int get clinicsTotal  {
     int total = 0;

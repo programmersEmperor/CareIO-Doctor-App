@@ -1,16 +1,15 @@
+import 'package:careio_doctor_version/Components/SharedWidgets/connectivity_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/page_header.dart';
-import 'package:careio_doctor_version/Components/SharedWidgets/refresh_indicator_widget.dart';
-import 'package:careio_doctor_version/Constants/MyHealthCenterTypes.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
-import 'package:careio_doctor_version/Pages/Home/controller/appointment_controller.dart';
+import 'package:careio_doctor_version/Models/HealthCenter.dart';
 import 'package:careio_doctor_version/Pages/Home/controller/my_health_centers_controller.dart';
-import 'package:careio_doctor_version/Pages/Home/custom/AppointmentsWidget.dart';
-import 'package:careio_doctor_version/Pages/Home/custom/MyHealthCentersWidget.dart';
+import 'package:careio_doctor_version/Pages/Home/custom/my_health_center_card.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
-import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sizer/sizer.dart';
 
 class MyHealthCentersPage extends StatelessWidget {
@@ -74,28 +73,64 @@ class MyHealthCentersPage extends StatelessWidget {
           child: TabBarView(
             controller: controller.tabController,
             children: [
-              Obx(
-                    () => RefreshWidget(
-                      onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.confirmed),
-                      isLoading: controller.isLoading[MyHealthCenterTypes.confirmed.index],
-                      child: MyHealthCentersWidget(
-                          myHealthCenters: controller.myConfirmedHealthCenters,
-                          onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.confirmed),
-                          isLoading: controller.isLoading[MyHealthCenterTypes.confirmed.index].value,
+              RefreshIndicator(
+                color: AppColors.primaryColor,
+                onRefresh:  () => Future.sync(
+                      () => controller.myConfirmedHealthCentersPagingController.refresh(),
+                ),
+                child: ConnectivityWidget(
+                  child: PagedListView<int, HealthCenter>(
+                    builderDelegate: PagedChildBuilderDelegate<HealthCenter>(
+                      firstPageProgressIndicatorBuilder: (_) =>
+                          SpinKitFadingCircle(
+                            color: AppColors.primaryColor,
+                          ),
+                      itemBuilder: (context, item, index) => MyHealthCenterCard(
+                        myHealthCenter: item,
+                        index: index,
+                      ),
+                    ),
+                    pagingController: controller.myConfirmedHealthCentersPagingController,
                   ),
                 ),
               ),
-              Obx(
-                    () => RefreshWidget(
-                      onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.request),
-                      isLoading: controller.isLoading[MyHealthCenterTypes.request.index],
-                      child: MyHealthCentersWidget(
-                        myHealthCenters: controller.healthCentersRequests,
-                        onRefresh: () => controller.initializeMyHealthCenters(type: MyHealthCenterTypes.request),
-                        isLoading: controller.isLoading[MyHealthCenterTypes.request.index].value,
-                        isRequests: true,
+              RefreshIndicator(
+                color: AppColors.primaryColor,
+                onRefresh:  () => Future.sync(
+                      () => controller.healthCentersRequestsPagingController.refresh(),
+                ),
+                child: ConnectivityWidget(
+                  child: PagedListView<int, HealthCenter>(
+                    builderDelegate: PagedChildBuilderDelegate<HealthCenter>(
+                      firstPageProgressIndicatorBuilder: (_) =>
+                          SpinKitFadingCircle(
+                            color: AppColors.primaryColor,
+                          ),
+                      itemBuilder: (context, item, index) => MyHealthCenterCard(
+                        myHealthCenter: item,
+                        index: index,
+                        isRequest: true,
+                        onCancel: (HealthCenter healthCenter) async {
+                          try{
+                            controller.cancelHealthCenterRequests(healthCenter);
+                          }
+                          catch (e) {
+                            throw e;
+                          };
+                        },
+                        onAccept: (HealthCenter healthCenter) async {
+                          try{
+                            controller.acceptHealthCenterRequests(healthCenter);
+                          }
+                          catch (e) {
+                            throw e;
+                          };
+                        },
                       ),
                     ),
+                    pagingController: controller.healthCentersRequestsPagingController,
+                  ),
+                ),
               ),
             ],
           ),

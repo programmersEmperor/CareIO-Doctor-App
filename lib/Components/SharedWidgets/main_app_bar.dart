@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
-import 'package:careio_doctor_version/Models/client.dart';
+import 'package:careio_doctor_version/Models/DoctorDetails.dart';
 import 'package:careio_doctor_version/Pages/Profile/profile_page.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class MainAppBar extends StatelessWidget {
-  final Patient patient;
-  const MainAppBar({super.key, required this.patient});
+  final DoctorDetails doctorUser;
+  const MainAppBar({super.key, required this.doctorUser});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MainAppBar extends StatelessWidget {
                     const SizedBox(
                       width: 7,
                     ),
-                    if (patient.avatar.isEmpty) ...[
+                    if (doctorUser.avatar == null || doctorUser.avatar!.isEmpty) ...[
                       Container(
                         height: 6.h,
                         width: 10.w,
@@ -49,7 +49,7 @@ class MainAppBar extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: CachedNetworkImageProvider(patient.avatar),
+                              image: CachedNetworkImageProvider(doctorUser.avatar ?? ""),
                               fit: BoxFit.cover,
                             )),
                         height: 5.h,
@@ -63,7 +63,7 @@ class MainAppBar extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              patient.name,
+                              doctorUser.name ?? "",
                               style: TextStyle(
                                 fontSize: 10.sp,
                                 color: Colors.black,

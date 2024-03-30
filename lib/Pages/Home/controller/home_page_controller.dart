@@ -1,19 +1,20 @@
 import 'dart:developer';
 
+import 'package:careio_doctor_version/Models/Degree.dart';
+import 'package:careio_doctor_version/Models/DoctorDetails.dart';
 import 'package:careio_doctor_version/Models/HomeInfo.dart';
 import 'package:careio_doctor_version/Models/Plan.dart';
 import 'package:careio_doctor_version/Models/Specialism.dart';
 import 'package:careio_doctor_version/Models/Wallet.dart';
 import 'package:careio_doctor_version/Models/client.dart';
-import 'package:careio_doctor_version/Pages/AiAssistance/chatbot_page.dart';
 import 'package:careio_doctor_version/Pages/Home/animations/animation_handler.dart';
-import 'package:careio_doctor_version/Pages/Home/custom/ai_intro_bottom_sheet.dart';
 import 'package:careio_doctor_version/Pages/Home/custom/map_bottom_sheet.dart';
 import 'package:careio_doctor_version/Pages/Home/home_main_page.dart';
 import 'package:careio_doctor_version/Pages/Home/my_appoinments_page.dart';
 import 'package:careio_doctor_version/Pages/Home/my_health_centers_page.dart';
 import 'package:careio_doctor_version/Pages/Notifications/notifications_page.dart';
 import 'package:careio_doctor_version/Pages/Profile/profile_page.dart';
+import 'package:careio_doctor_version/Services/Api/degrees.dart';
 import 'package:careio_doctor_version/Services/Api/home.dart';
 import 'package:careio_doctor_version/Services/Api/patient.dart';
 import 'package:careio_doctor_version/Services/Api/specializations.dart';
@@ -27,7 +28,7 @@ import 'package:sizer/sizer.dart';
 class HomePageController extends GetxController
     with GetTickerProviderStateMixin {
   RxInt activePage = 4.obs;
-  Rx<Patient> patient = Get.find<UserSession>().patient.obs;
+  Rx<DoctorDetails> doctorUser = Get.find<UserSession>().doctorUser.obs;
   final List<IconData> icons = [
     Boxicons.bx_buildings,
     Boxicons.bx_calendar,
@@ -38,8 +39,6 @@ class HomePageController extends GetxController
   HomeApiService apiService = Get.find<HomeApiService>();
   WalletsApiService walletsApiService = Get.find<WalletsApiService>();
   PatientApiService patientApiService = Get.find<PatientApiService>();
-  SpecializationApiService specializationApiService =
-      Get.find<SpecializationApiService>();
 
   RxBool get isLoading => apiService.isLoading;
   RxBool get walletIsLoading => walletsApiService.isLoading;
@@ -62,9 +61,6 @@ class HomePageController extends GetxController
     animationHandler = Get.put(HomeAnimationHandler());
 
     await fetchHomeInfo();
-    await fetchWallets();
-    await fetchSpecializations();
-    await fetchPlans();
   }
 
   Future<void> fetchPlans() async {
@@ -74,7 +70,7 @@ class HomePageController extends GetxController
 
     List<Plan> plans = [];
     response.data['result'].forEach((e) => plans.add(Plan.fromJson(e)));
-    Get.find<UserSession>().plans = plans;
+    // Get.find<UserSession>().plans = plans;
   }
 
   void changePage(int index) {
@@ -100,17 +96,6 @@ class HomePageController extends GetxController
     Get.find<UserSession>().wallets = wallets;
   }
 
-  Future<void> fetchSpecializations() async {
-    var response = await specializationApiService.fetchSpecializations();
-    log(response.toString());
-    if (response == null) return;
-
-    List<Specialism> specializations = [];
-    response.data['result']
-        .forEach((e) => specializations.add(Specialism.fromJson(e)));
-    Get.find<UserSession>().specializations = specializations;
-  }
-
   void showMapBottomSheet(BuildContext context) {
     AnimationController controller =
         BottomSheet.createAnimationController(this);
@@ -132,35 +117,6 @@ class HomePageController extends GetxController
       constraints: BoxConstraints(maxHeight: 94.h),
       builder: (BuildContext context) {
         return const MapBottomSheet();
-      },
-    );
-  }
-
-  void showBottomSheet(BuildContext context) {
-    if (Get.find<UserSession>().userOpenedChat) {
-      Get.toNamed(ChatBotPage.id);
-      return;
-    }
-    AnimationController controller =
-        BottomSheet.createAnimationController(this);
-
-    controller.duration = 600.milliseconds;
-
-    controller.reverseDuration = 300.milliseconds;
-
-    controller.drive(CurveTween(curve: Curves.bounceInOut));
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15.sp),
-              topRight: Radius.circular(15.sp))),
-      useSafeArea: true,
-      transitionAnimationController: controller,
-      constraints: BoxConstraints(maxHeight: 94.h),
-      builder: (BuildContext context) {
-        return const AiIntroBottomSheet();
       },
     );
   }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:careio_doctor_version/Pages/Authentication/completeSetup/complete_setup.dart';
 import 'package:careio_doctor_version/Pages/Authentication/introduction.dart';
 import 'package:careio_doctor_version/Pages/Authentication/login/loginPage.dart';
 import 'package:careio_doctor_version/Pages/Authentication/newPassword/newPassword.dart';
@@ -163,11 +162,11 @@ class AuthenticationController extends GetxController
       Get.find<UserSession>().token = response.data['temp-token'];
       Get.toNamed(OTPPage.id);
     } else {
-      if (await Get.find<UserSession>().savePatient(response.data['result'])) {
+      if (await Get.find<UserSession>().saveDoctorUser(response.data['result'])) {
         debugPrint(
             'Token  var is ${Get.find<UserSession>().token} and api is ${response.data['result']['token']}');
-        if (Get.find<UserSession>().patient.name == "") {
-          Get.toNamed(CompleteSetup.id);
+        if (Get.find<UserSession>().doctorUser.name == "") {
+          // Get.toNamed(CompleteSetup.id);
           return;
         }
         Get.offAllNamed(HomePage.id);
@@ -232,9 +231,9 @@ class AuthenticationController extends GetxController
       Get.find<UserSession>().token = response.data['result']['temp-token'];
       Get.toNamed(NewPasswordPage.id);
     } else {
-      if (await Get.find<UserSession>().savePatient(response.data['result'])) {
-        if (Get.find<UserSession>().patient.name == "") {
-          Get.toNamed(CompleteSetup.id);
+      if (await Get.find<UserSession>().saveDoctorUser(response.data['result'])) {
+        if (Get.find<UserSession>().doctorUser.name == "") {
+          // Get.toNamed(CompleteSetup.id);
           return;
         }
         Get.offAllNamed(HomePage.id);
@@ -242,23 +241,8 @@ class AuthenticationController extends GetxController
     }
   }
 
-  Future<void> completeSetup() async {
-    if (!completeSetupFormKey.currentState!.saveAndValidate()) return;
-    isLoading(true);
-    var response = await Get.find<PatientApiService>().update(
-        name: completeSetupFormKey.currentState!.value['name'],
-        avatar: File(image.value.path));
-    if (response == null) return;
-
-    Get.find<UserSession>().patient.avatar = response.data['result']['avatar']??"";
-    Get.find<UserSession>().patient.name = response.data['result']['name'];
-    Get.find<UserSession>().updatePatient();
-    Get.offAllNamed(HomePage.id);
-    isLoading(false);
-  }
-
   Future<void> logOut() async {
-    if (await Get.find<UserSession>().logoutPatient()) {
+    if (await Get.find<UserSession>().logout()) {
       Get.offAll(() => const IntroductionPage());
     }
   }

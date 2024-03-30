@@ -132,6 +132,8 @@ Map<String, String> ar = {
   AppStrings.cannotCompleteOperation: "لايمكن اكمال العملية",
   AppStrings.newRequests: "الطلبات الجديدة",
   AppStrings.accept: "قبول",
+  AppStrings.rating: "التقييم",
+
 
 
 };

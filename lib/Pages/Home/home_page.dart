@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             Obx(() => MainAppBar(
-              patient: homePageController.patient.value,
+              doctorUser: homePageController.doctorUser.value,
             )),
             Expanded(
               child: Obx(

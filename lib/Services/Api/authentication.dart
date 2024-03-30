@@ -10,7 +10,7 @@ class AuthenticationApiService {
     try {
       isLoading(true);
       var response = await _apiService.postRequest(
-        url: '/patients/login',
+        url: '/login',
         body: body,
       );
       isLoading(false);
@@ -30,7 +30,7 @@ class AuthenticationApiService {
       };
       isLoading(true);
       var response = await _apiService.postRequest(
-          url: '/patients/register', body: requestBody);
+          url: '/register', body: requestBody);
       isLoading(false);
       return response;
     } catch (e) {
@@ -43,7 +43,7 @@ class AuthenticationApiService {
     try {
       isLoading(true);
       var response = await _apiService.postRequest(
-          url: '/patients/resetPassword',
+          url: '/resetPassword',
           body: dio.FormData.fromMap(
               {"newPassword": password, 'is-forget': true}));
       isLoading(false);
@@ -62,7 +62,7 @@ class AuthenticationApiService {
     try {
       isLoading(true);
       var response = await _apiService.postRequest(
-          url: '/patients/phone/sendOTP', body: body);
+          url: '/phone/sendOTP', body: body);
       isLoading(false);
       return response;
     } catch (e) {
@@ -74,7 +74,7 @@ class AuthenticationApiService {
     try {
       isLoading(true);
       var response = await _apiService.postRequest(
-        url: 'patients/phone/verifyOTP',
+        url: '/phone/verifyOTP',
         body: {
           'otp': otp,
           'is-forget': isReset,

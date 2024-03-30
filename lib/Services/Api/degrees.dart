@@ -1,15 +1,15 @@
 import 'package:careio_doctor_version/Services/Api/base/base.dart';
 import 'package:get/get.dart';
 
-class SpecializationApiService {
+class DegreesApiService {
   final BaseApi _apiService = BaseApi();
   final isLoading = false.obs;
 
-  Future<dynamic> fetchSpecializations() async {
+  Future<dynamic> fetchDegrees() async {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: '/specialisms',
+        url: '/degrees',
       );
       isLoading(false);
       return response;

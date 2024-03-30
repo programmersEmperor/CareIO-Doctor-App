@@ -11,16 +11,12 @@ class SplashUiPageController extends GetxController {
   void onInit() {
     super.onInit();
     Timer(3.seconds, () async {
-      Get.find<LocalizationHelper>()
-          .appliedLocale(await Get.find<UserSession>().getLocale());
+      Get.find<LocalizationHelper>().appliedLocale(await Get.find<UserSession>().getLocale());
       Get.updateLocale(Get.find<LocalizationHelper>().appliedLocale.value);
-      if (await Get.find<UserSession>().getPatient()) {
-        if (Get.find<UserSession>().patient.name != "") {
-          Get.offAllNamed(HomePage.id);
-        } else {
-          Get.offAll(() => const IntroductionPage());
-        }
-      } else {
+      if (await Get.find<UserSession>().getDoctorUser()) {
+        Get.offAllNamed(HomePage.id);
+      }
+      else {
         Get.offAll(() => const IntroductionPage());
       }
     });
