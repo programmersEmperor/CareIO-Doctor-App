@@ -5,17 +5,22 @@ import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Localization/localization_helper.dart';
 import 'package:careio_doctor_version/Models/Experience.dart';
 import 'package:careio_doctor_version/Pages/Profile/controller/profile_page_controller.dart';
+import 'package:careio_doctor_version/Pages/Profile/custom/custom_list_tile.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
+import 'package:careio_doctor_version/Utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
+
 class ExperienceFormSheet extends StatelessWidget {
-  final Experience? experience;
-  final Function(Experience) onTap;
-  const ExperienceFormSheet({super.key, this.experience, required this.onTap});
+  final bool isNew;
+  final FutureCallBack onTap;
+  final RxBool isLoading = false.obs;
+  ExperienceFormSheet({super.key, required this.onTap, this.isNew = true});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class ExperienceFormSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                experience == null ? "Add New Experience" : "Edit New Experience",
+                isNew ? "Add New Experience" : "Edit Experience",
                 style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w700),
               ),
               SizedBox(
@@ -65,6 +70,7 @@ class ExperienceFormSheet extends StatelessWidget {
                           onTap: (){
                             Get.dialog(
                               CustomDatePicker(
+                                initialDate: isNew? null : DateTime.parse(controller.experienceFromDate.text),
                                 selectableDayPredicate: (date) => date.isAfter(DateTime.now().toLocal()) == false,
                                 firstDate: DateTime(DateTime.now().year - 40),
                                 lastDate: DateTime.now(),
@@ -99,6 +105,7 @@ class ExperienceFormSheet extends StatelessWidget {
                           onTap: (){
                             Get.dialog(
                               CustomDatePicker(
+                                initialDate: isNew? null : DateTime.parse(controller.experienceToDate.text),
                                 selectableDayPredicate: (date) => date.isAfter(DateTime.now().toLocal()) == false,
                                 firstDate: DateTime(DateTime.now().year - 40),
                                 lastDate: DateTime.now(),
@@ -130,10 +137,25 @@ class ExperienceFormSheet extends StatelessWidget {
                       height: 15.sp,
                     ),
                     MainColoredButton(
-                      text: "Create Experience",
+                      text: isNew ? "Create Experience" : "Save Changes",
                       fontSize: 12.sp,
-                      isLoading: controller.isButtonLoading,
-                      onPress: (){},
+                      isLoading: isLoading,
+                      onPress: () async{
+                        try{
+                          if(isLoading.isTrue) return;
+
+                          isLoading(true);
+                          await onTap();
+                          isLoading(false);
+                        }
+                        catch(e){
+                          isLoading(false);
+                          showSnack(
+                              title: AppStrings.cannotCompleteOperation,
+                              description: "$e");
+                        }
+
+                      },
                     ),
                     SizedBox(
                       height: 15.sp,

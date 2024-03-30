@@ -21,8 +21,10 @@ class HospitalGridView extends StatelessWidget {
               mainAxisExtent: 35.h),
           itemBuilder: (_, index) {
             if (healthCenters.isEmpty) {
-              return const NoDataWidget(
-                  message: "No health centers found, Please try again latter ");
+              return NoDataWidget(
+                  message: "No health centers found, Please try again latter ",
+                 top: 35.h,
+              );
             } else {
               return HospitalGridWidget(
                 healthCenter: healthCenters[index],

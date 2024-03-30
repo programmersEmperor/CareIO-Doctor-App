@@ -29,7 +29,7 @@ class MyHealthCentersWidget extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 9.h),
           itemBuilder: (_, index) {
             if (myHealthCenters.isEmpty) {
-              return const NoDataWidget(message: "No Health Center Yet!");
+              return NoDataWidget(message: "No Health Center Yet!", top: 35.h,);
             } else {
               return MyHealthCenterCard(
                 myHealthCenter: myHealthCenters[index],

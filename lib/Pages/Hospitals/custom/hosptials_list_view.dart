@@ -15,8 +15,10 @@ class HospitalListVIew extends StatelessWidget {
         itemCount: healthCenters.isEmpty ? 1 : healthCenters.length,
         itemBuilder: (_, index) {
           if (healthCenters.isEmpty) {
-            return const NoDataWidget(
-                message: "No health centers found, Please try again latter ");
+            return NoDataWidget(
+                message: "No health centers found, Please try again latter ",
+              top: 35.h,
+            );
           } else {
             return HospitalCard(
               healthCenter: healthCenters[index],

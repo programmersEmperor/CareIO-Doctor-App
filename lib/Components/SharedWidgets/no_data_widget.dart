@@ -3,13 +3,14 @@ import 'package:sizer/sizer.dart';
 
 class NoDataWidget extends StatelessWidget {
   final String message;
-  const NoDataWidget({super.key, required this.message});
+  final double top;
+  NoDataWidget({super.key, required this.message, required this.top});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 35.h,
+        top: top,
       ),
       child: Text(
         message,

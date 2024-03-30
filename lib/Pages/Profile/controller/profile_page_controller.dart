@@ -46,7 +46,7 @@ class ProfilePageController extends GetxController
   final GlobalKey<FormBuilderState> qualificationFormKey = GlobalKey<FormBuilderState>();
 
   late final TabController tabController;
-  RxBool isButtonLoading = false.obs;
+  RxBool isPersonalInfoButtonLoading = false.obs;
   RxBool isPersonalInfoLoading = false.obs;
   RxBool get experienceIsLoading => _experienceApiService.isLoading;
   RxBool get qualificationIsLoading => _qualificationApiService.isLoading;
@@ -88,7 +88,7 @@ class ProfilePageController extends GetxController
     experiencePagingController.refresh();
 
     qualificationPagingController.addPageRequestListener((pageKey) {
-      fetchExperiences(pageKey: pageKey);
+      fetchQualifications(pageKey: pageKey);
     });
     qualificationPagingController.refresh();
 
@@ -128,40 +128,49 @@ class ProfilePageController extends GetxController
 
   void initControllers() {
     name.text = doctorUser.value.name ?? "";
+    phone.text = doctorUser.value.phone ?? "";
     description.text = doctorUser.value.description ?? "";
   }
 
   void editDoctorUser() async {
-    if (!userInfoFormKey.currentState!.saveAndValidate() || isButtonLoading.isTrue) {
-      return;
-    }
+    try{
+      if (!userInfoFormKey.currentState!.saveAndValidate() || isPersonalInfoButtonLoading.isTrue) {
+        return;
+      }
 
-    isButtonLoading(true);
-    var response = await _apiService.update(
+      isPersonalInfoButtonLoading(true);
+      var response = await _apiService.update(
         name: name.text,
         avatar: getImage,
+        phone: phone.text,
         specialismId: updatedSpecialism.value ?? doctorUser.value.specialism!.id,
         degreeId: updatedDegree.value ?? doctorUser.value.degree!.id,
         description: description.text,
-    );
-    isButtonLoading(false);
+      );
+      isPersonalInfoButtonLoading(false);
 
-    if (response == null) return;
-    var decodedResponse = json.decode(response.toString());
-    // Get.find<UserSession>().doctorUser.name = decodedResponse["result"]["name"];
-    // Get.find<UserSession>().doctorUser.avatar = decodedResponse["result"]["avatar"];
-    Get.find<UserSession>().updateDoctorUser();
+      if (response == null) return;
+      var decodedResponse = json.decode(response.toString());
+      Get.find<UserSession>().doctorUser.name = decodedResponse["result"]["name"];
+      Get.find<UserSession>().doctorUser.phone = decodedResponse["result"]["phone"];
+      Get.find<UserSession>().doctorUser.avatar = decodedResponse["result"]["avatar"];
+      Get.find<UserSession>().doctorUser.specialism = Get.find<UserSession>().specializations.firstWhere((specialism) => specialism.id == updatedSpecialism.value);
+      Get.find<UserSession>().doctorUser.degree = Get.find<UserSession>().degrees.firstWhere((degree) => degree.id == updatedDegree.value);
+      Get.find<UserSession>().updateDoctorUser();
 
-    Get.find<HomePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
-    Get.find<HomePageController>().doctorUser.refresh();
+      Get.find<HomePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
+      Get.find<HomePageController>().doctorUser.refresh();
+      Get.find<ProfilePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
+      Get.find<ProfilePageController>().doctorUser.refresh();
 
-    Get.find<ProfilePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
-    Get.find<ProfilePageController>().doctorUser.refresh();
 
-
-    showSnack(
-        title: "Profile Updated",
-        description: "Your data has been updated successfully");
+      showSnack(
+          title: "Profile Updated",
+          description: "Your data has been updated successfully");
+    }
+    catch(e){
+      isPersonalInfoButtonLoading(false);
+    }
   }
 
   void showImageSelector(BuildContext context) {
@@ -272,23 +281,99 @@ class ProfilePageController extends GetxController
     experiencePlace.clear();
     experienceToDate.clear();
     experienceFromDate.clear();
-    Get.put(BottomSheetController()).showBottomSheet(ExperienceFormSheet(onTap: (Experience e) async {}), 100.h);
+    Get.put(BottomSheetController()).showBottomSheet(ExperienceFormSheet(onTap: () async {
+          try{
+            if(!experienceFormKey.currentState!.saveAndValidate()) return;
+
+            var response = await _experienceApiService.createExperience(body: {
+              "place": experiencePlace.text,
+              "position": experiencePosition.text,
+              "from": experienceFromDate.text,
+              "to": experienceToDate.text,
+            });
+            if (response == null) return;
+            Get.close(1);
+            experiencePagingController.refresh();
+          }
+          catch(e){
+            throw e;
+          }
+        },
+    ), 100.h);
   }
 
   void editExperienceBottomSheet(Experience experience){
-    Get.put(BottomSheetController()).showBottomSheet(ExperienceFormSheet(experience: experience, onTap: (Experience e) async {}), 100.h);
+    experiencePosition.text = experience.position;
+    experiencePlace.text = experience.place;
+    experienceFromDate.text = experience.from;
+    experienceToDate.text = experience.to;
+    Get.put(BottomSheetController()).showBottomSheet(ExperienceFormSheet(isNew: false, onTap: () async {
+      try{
+        if(!experienceFormKey.currentState!.saveAndValidate()) return;
+
+        var response = await _experienceApiService.editExperience(
+            id: experience.id,
+            body: {
+          "place": experiencePlace.text,
+          "position": experiencePosition.text,
+          "from": experienceFromDate.text,
+          "to": experienceToDate.text,
+        });
+        if (response == null) return;
+        Get.close(1);
+        experiencePagingController.refresh();
+      }
+      catch(e){
+        throw e;
+      }
+    }), 100.h);
   }
 
   void addNewQualificationBottomSheet(){
-    experiencePosition.clear();
-    experiencePlace.clear();
-    experienceToDate.clear();
-    experienceFromDate.clear();
-    Get.put(BottomSheetController()).showBottomSheet(ExperienceFormSheet(onTap: (Experience e) async {}), 100.h);
+    qualificationTitle.clear();
+    qualificationIssuer.clear();
+    qualificationDate.clear();
+    Get.put(BottomSheetController()).showBottomSheet(QualificationFormSheet(onTap: () async {
+      try{
+        if(!qualificationFormKey.currentState!.saveAndValidate()) return;
+
+        var response = await _qualificationApiService.createQualifications(body: {
+          "title": qualificationTitle.text,
+          "issuer": qualificationIssuer.text,
+          "date": qualificationDate.text,
+        });
+        if (response == null) return;
+        Get.close(1);
+        qualificationPagingController.refresh();
+      }
+      catch(e){
+        throw e;
+      }
+    }), 100.h);
   }
 
   void editQualificationBottomSheet(Qualification qualification){
-    Get.put(BottomSheetController()).showBottomSheet(QualificationFormSheet(qualification: qualification, onTap: (Qualification q) async {}), 100.h);
+    qualificationTitle.text = qualification.title;
+    qualificationIssuer.text = qualification.issuer;
+    qualificationDate.text = qualification.date;
+    Get.put(BottomSheetController()).showBottomSheet(QualificationFormSheet(isNew: false, onTap: () async {
+      try{
+        if(!qualificationFormKey.currentState!.saveAndValidate()) return;
+        var response = await _qualificationApiService.editQualifications(
+            id: qualification.id,
+            body: {
+            "title": qualificationTitle.text,
+            "issuer": qualificationIssuer.text,
+            "date": qualificationDate.text,
+          });
+        if (response == null) return;
+        Get.close(1);
+        qualificationPagingController.refresh();
+      }
+      catch(e){
+        throw e;
+      }
+    }), 100.h);
   }
 
   Future<void> fetchExperiences({required int pageKey}) async {
@@ -327,7 +412,7 @@ class ProfilePageController extends GetxController
 
   Future<void> editExperience({required Experience experience}) async {
     try{
-      await _experienceApiService.editExperience(id: experience.id!, body: experience.toJson());
+      await _experienceApiService.editExperience(id: experience.id, body: experience.toJson());
     }
     catch (e){
       throw e;
@@ -336,7 +421,8 @@ class ProfilePageController extends GetxController
 
   Future<void> removeExperience({required Experience experience}) async {
     try{
-      await _experienceApiService.removeExperience(id: experience.id!);
+      await _experienceApiService.removeExperience(id: experience.id);
+      experiencePagingController.refresh();
     }
     catch (e){
       throw e;
@@ -379,7 +465,7 @@ class ProfilePageController extends GetxController
 
   Future<void> editQualification({required Qualification qualification}) async {
     try{
-      await _qualificationApiService.editQualifications(id: qualification.id!, body: qualification.toJson());
+      await _qualificationApiService.editQualifications(id: qualification.id, body: qualification.toJson());
     }
     catch (e){
       throw e;
@@ -388,7 +474,8 @@ class ProfilePageController extends GetxController
 
   Future<void> removeQualification({required Qualification qualification}) async {
     try{
-      await _qualificationApiService.removeQualifications(id: qualification.id!);
+      await _qualificationApiService.removeQualifications(id: qualification.id);
+      qualificationPagingController.refresh();
     }
     catch (e){
       throw e;

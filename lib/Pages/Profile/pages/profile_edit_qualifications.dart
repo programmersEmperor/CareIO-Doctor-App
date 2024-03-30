@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/connectivity_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/main_colored_button.dart';
+import 'package:careio_doctor_version/Components/SharedWidgets/no_data_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/text_input_field.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Models/Qualification.dart';
@@ -27,25 +28,32 @@ class ProfileEditQualifications extends StatelessWidget{
           RefreshIndicator(
             color: AppColors.primaryColor,
             onRefresh:  () => Future.sync(
-                  () => controller.experiencePagingController.refresh(),
+                  () => controller.qualificationPagingController.refresh(),
             ),
             child: ConnectivityWidget(
               child: PagedListView<int, Qualification>(
                 builderDelegate: PagedChildBuilderDelegate<Qualification>(
+                  animateTransitions: true,
+                  noItemsFoundIndicatorBuilder: (_)=> Center(
+                    child: NoDataWidget(message: "No Added Qualifications Yet!", top: 0),
+                  ),
                   firstPageProgressIndicatorBuilder: (_) =>
                       SpinKitFadingCircle(
                         color: AppColors.primaryColor,
                       ),
-                  itemBuilder: (context, item, index) => CustomListTile(
-                    title: "here is the title",
-                    subTitle: "here is the subtitle",
-                    from: "2020/4/4",
-                    onEdit: (){
-                      controller.editQualificationBottomSheet(item);
-                    },
-                    onDelete: () async {
-                      await controller.removeQualification(qualification: item);
-                    },
+                  itemBuilder: (context, item, index) => Padding(
+                    padding: EdgeInsets.only(bottom: controller.qualificationPagingController.itemList != null && index == controller.qualificationPagingController.itemList!.length -1 ? 80 : 0),
+                    child: CustomListTile(
+                      title: item.title,
+                      subTitle: item.issuer,
+                      from: item.date,
+                      onEdit: (){
+                        controller.editQualificationBottomSheet(item);
+                      },
+                      onDelete: () async {
+                        await controller.removeQualification(qualification: item);
+                      },
+                    ),
                   ),
                 ),
                 pagingController: controller.qualificationPagingController,

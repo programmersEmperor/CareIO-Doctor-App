@@ -25,7 +25,9 @@ class DoctorGridView extends StatelessWidget {
           itemBuilder: (_, index) {
             if (doctors.isEmpty) {
               return NoDataWidget(
-                  message: "No doctors found, Please try again latter ");
+                  message: "No doctors found, Please try again latter ",
+                top: 35.h,
+              );
             } else {
               return DoctorGridWidget(
                 doctor: doctors[index],

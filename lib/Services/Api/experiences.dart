@@ -51,7 +51,7 @@ class ExperiencesApiService {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: '/experiences/remove/${id}',
+        url: '/experiences/delete/${id}',
       );
       isLoading(false);
       return response;

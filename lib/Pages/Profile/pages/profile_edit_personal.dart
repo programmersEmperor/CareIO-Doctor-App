@@ -137,31 +137,39 @@ class ProfileEditPersonal extends StatelessWidget{
                         controller: controller.name,
                       ),
                       SizedBox(
-                        height: 15.sp,
+                        height: 10.sp,
+                      ),
+                      TextInputField(
+                        name: 'Phone',
+                        required: true,
+                        controller: controller.phone,
+                      ),
+                      SizedBox(
+                        height: 10.sp,
                       ),
                       Obx(()=>DropDownInput(
                         name: 'specialism',
                         hintText: "Specialism",
                         items: controller.specialisms,
-                        initialValue: controller.doctorUser.value.specialism!.id,
+                        initialValue: controller.doctorUser.value.specialism.id,
                         onChanged: (item){
                           controller.updatedSpecialism(item);
                         },
                       )),
                       SizedBox(
-                        height: 15.sp,
+                        height: 10.sp,
                       ),
                       Obx(()=> DropDownInput(
                             name: 'degree',
                             hintText: "Degree",
                             items: controller.degrees,
-                            initialValue: controller.doctorUser.value.degree!.id,
+                            initialValue: controller.doctorUser.value.degree.id,
                             onChanged: (item){
                               controller.updatedDegree(item);
                             },
                           )),
                       SizedBox(
-                        height: 15.sp,
+                        height: 10.sp,
                       ),
                       TextInputField(
                         name: 'Description',
@@ -171,12 +179,12 @@ class ProfileEditPersonal extends StatelessWidget{
                         controller: controller.description,
                       ),
                       SizedBox(
-                        height: 15.sp,
+                        height: 10.sp,
                       ),
                       MainColoredButton(
                         text: AppStrings.saveChanges.tr,
                         fontSize: 12.sp,
-                        isLoading: controller.isButtonLoading,
+                        isLoading: controller.isPersonalInfoButtonLoading,
                         onPress: controller.editDoctorUser,
                       ),
                       SizedBox(

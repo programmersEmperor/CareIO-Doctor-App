@@ -80,17 +80,17 @@ class IntroductionPage extends StatelessWidget {
                           onPress: () => Get.toNamed(LoginPage.id),
                         ),
                       ),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () => Get.toNamed(SignupPage.id),
-                          child: Text(
-                            AppStrings.register.tr,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: TextButton(
+                      //     onPressed: () => Get.toNamed(SignupPage.id),
+                      //     child: Text(
+                      //       AppStrings.register.tr,
+                      //       style: const TextStyle(
+                      //           color: Colors.black,
+                      //           fontWeight: FontWeight.bold),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

@@ -6,7 +6,9 @@ import 'package:careio_doctor_version/Localization/localization_helper.dart';
 import 'package:careio_doctor_version/Models/Experience.dart';
 import 'package:careio_doctor_version/Models/Qualification.dart';
 import 'package:careio_doctor_version/Pages/Profile/controller/profile_page_controller.dart';
+import 'package:careio_doctor_version/Pages/Profile/custom/custom_list_tile.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
+import 'package:careio_doctor_version/Utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -14,9 +16,10 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 class QualificationFormSheet extends StatelessWidget {
-  final Qualification? qualification;
-  final Function(Qualification) onTap;
-  const QualificationFormSheet({super.key, this.qualification, required this.onTap});
+  final bool isNew;
+  final FutureCallBack onTap;
+  final RxBool isLoading = false.obs;
+  QualificationFormSheet({super.key, required this.onTap, this.isNew = true});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +36,14 @@ class QualificationFormSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                qualification == null ? "Add New Qualification" : "Edit Qualification",
+                isNew ? "Add New Qualification" : "Edit Qualification",
                 style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w700),
               ),
               SizedBox(
                 height: 20.sp,
               ),
               FormBuilder(
-                key: controller.experienceFormKey,
+                key: controller.qualificationFormKey,
                 child: Column(
                   children: [
                     TextInputField(
@@ -66,12 +69,13 @@ class QualificationFormSheet extends StatelessWidget {
                           onTap: (){
                             Get.dialog(
                               CustomDatePicker(
+                                initialDate: isNew ? null : DateTime.parse(controller.qualificationDate.text),
                                 selectableDayPredicate: (date) => date.isAfter(DateTime.now().toLocal()) == false,
                                 firstDate: DateTime(DateTime.now().year - 40),
                                 lastDate: DateTime.now(),
                                 onDateChange: (date) {
-                                  controller.experienceFromDate.text = DateFormat('yyyy-MM-dd').format(date).toString();
-                                  Get.close(0);
+                                  controller.qualificationDate.text = DateFormat('yyyy-MM-dd').format(date).toString();
+                                  Get.close(1);
                                 },
                               ),
                               useSafeArea: false,
@@ -97,10 +101,24 @@ class QualificationFormSheet extends StatelessWidget {
                       height: 15.sp,
                     ),
                     MainColoredButton(
-                      text: "Create Experience",
+                      text: isNew? "Create Qualification" : "Save Changes",
                       fontSize: 12.sp,
-                      isLoading: controller.isButtonLoading,
-                      onPress: (){},
+                      isLoading: isLoading,
+                      onPress: () async{
+                        try{
+                          if(isLoading.isTrue) return;
+
+                          isLoading(true);
+                          await onTap();
+                          isLoading(false);
+                        }
+                        catch(e){
+                          isLoading(false);
+                          showSnack(
+                              title: AppStrings.cannotCompleteOperation,
+                              description: "$e");
+                        }
+                      },
                     ),
                     SizedBox(
                       height: 15.sp,

@@ -40,28 +40,28 @@ class MyHealthCenters {
 
   Future<dynamic> acceptHealthCenterRequest({required int id}) async {
     try {
-      myHealthCenterIsLoading(true);
+      // healthCentersRequestsIsLoading(true);
       var response = await _apiService.getRequest(
-        url: '/health-centers-requests/accept/${id}',
+        url: '/health-center-requests/accept/${id}',
       );
-      myHealthCenterIsLoading(false);
+      // healthCentersRequestsIsLoading(false);
       return response;
     } catch (e) {
-      myHealthCenterIsLoading(false);
+      // healthCentersRequestsIsLoading(false);
       debugPrint(e.toString());
     }
   }
 
   Future<dynamic> cancelHealthCenterRequest({required int id}) async {
     try {
-      myHealthCenterIsLoading(true);
+      // healthCentersRequestsIsLoading(true);
       var response = await _apiService.getRequest(
-        url: '/health-centers-requests/cancel/${id}',
+        url: '/health-center-requests/reject/${id}',
       );
-      myHealthCenterIsLoading(false);
+      // healthCentersRequestsIsLoading(false);
       return response;
     } catch (e) {
-      myHealthCenterIsLoading(false);
+      // healthCentersRequestsIsLoading(false);
       debugPrint(e.toString());
     }
   }

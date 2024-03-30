@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Experience {
   Experience({
     required int id,
@@ -20,17 +22,18 @@ class Experience {
     _from = json['from'];
     _to = json['to'];
   }
-  int? _id;
-  String? _place;
-  String? _position;
-  String? _from;
-  String? _to;
+  late int _id;
+  late String _place;
+  late String _position;
+  late String _from;
+  late String _to;
 
-  int? get id => _id;
-  String? get place => _place;
-  String? get position => _position;
-  String get from => _from ?? "";
-  String get to => _to ?? "";
+  int get id => _id;
+  String get place => _place;
+  String get position => _position;
+  String get from => DateFormat('yyyy-MM-dd').format(DateTime.parse(_from)).toString();
+  String get to => DateFormat('yyyy-MM-dd').format(DateTime.parse(_to)).toString();
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

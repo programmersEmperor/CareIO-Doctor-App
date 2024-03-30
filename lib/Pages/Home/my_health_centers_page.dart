@@ -1,4 +1,5 @@
 import 'package:careio_doctor_version/Components/SharedWidgets/connectivity_widget.dart';
+import 'package:careio_doctor_version/Components/SharedWidgets/no_data_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/page_header.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Models/HealthCenter.dart';
@@ -81,6 +82,10 @@ class MyHealthCentersPage extends StatelessWidget {
                 child: ConnectivityWidget(
                   child: PagedListView<int, HealthCenter>(
                     builderDelegate: PagedChildBuilderDelegate<HealthCenter>(
+                      animateTransitions: true,
+                      noItemsFoundIndicatorBuilder: (_)=> Center(
+                        child: NoDataWidget(message: "No Health Centers Yet!", top: 0),
+                      ),
                       firstPageProgressIndicatorBuilder: (_) =>
                           SpinKitFadingCircle(
                             color: AppColors.primaryColor,
@@ -102,6 +107,10 @@ class MyHealthCentersPage extends StatelessWidget {
                 child: ConnectivityWidget(
                   child: PagedListView<int, HealthCenter>(
                     builderDelegate: PagedChildBuilderDelegate<HealthCenter>(
+                      animateTransitions: true,
+                      noItemsFoundIndicatorBuilder: (_)=> Center(
+                        child: NoDataWidget(message: "No Job Requests Yet!", top: 0),
+                      ),
                       firstPageProgressIndicatorBuilder: (_) =>
                           SpinKitFadingCircle(
                             color: AppColors.primaryColor,
@@ -112,7 +121,7 @@ class MyHealthCentersPage extends StatelessWidget {
                         isRequest: true,
                         onCancel: (HealthCenter healthCenter) async {
                           try{
-                            controller.cancelHealthCenterRequests(healthCenter);
+                            await controller.cancelHealthCenterRequests(healthCenter);
                           }
                           catch (e) {
                             throw e;
@@ -120,7 +129,7 @@ class MyHealthCentersPage extends StatelessWidget {
                         },
                         onAccept: (HealthCenter healthCenter) async {
                           try{
-                            controller.acceptHealthCenterRequests(healthCenter);
+                            await controller.acceptHealthCenterRequests(healthCenter);
                           }
                           catch (e) {
                             throw e;

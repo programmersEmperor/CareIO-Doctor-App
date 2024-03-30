@@ -70,8 +70,8 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 15.sp, left: 10.sp, right: 10.sp),
-      child: Obx(()=> Opacity(opacity: isLoading.isTrue? 0.7 : 1, child: Card(
-
+      child: Obx(()=> Opacity(opacity: isLoading.isTrue? 0.5 : 1, child:
+      Card(
         elevation: 15,
         shadowColor: Colors.grey.shade100,
         color: Colors.white,
@@ -142,7 +142,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -167,7 +167,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -192,10 +192,10 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Icon(
                             Icons.star,
@@ -209,7 +209,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                             padding: EdgeInsets.only(
                                 top: 2.sp, left: 2.sp, right: 2.sp),
                             child: Text(
-                              widget.myHealthCenter.rating!.toStringAsFixed(1),
+                                widget.myHealthCenter.rating == null ? "0.0" : widget.myHealthCenter.rating!.toStringAsFixed(1),
                               style: TextStyle(
                                   color: Colors.black54, fontSize: 8.5.sp),
                             ),
@@ -342,9 +342,9 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                       child: CancelButton(
                         onTap: () async {
                           try{
-                            if(widget.onAccept != null && isLoading.isFalse) {
+                            if(widget.onCancel != null && isLoading.isFalse) {
                               isLoading(true);
-                              await widget.onAccept!(widget.myHealthCenter);
+                              await widget.onCancel!(widget.myHealthCenter);
                               isLoading(false);
                             }
                           }

@@ -20,32 +20,30 @@ class DoctorDetails {
     required List<Qualification> qualifications,
   }) {
     _id = id;
-    _name = name;
-    _avatar = avatar;
+    name = name;
+    avatar = avatar;
     _rating = rating;
-    _phone = phone;
+    phone = phone;
     _isRecommended = isRecommended;
-    _description = description;
+    description = description;
     _completedAppointments = completedAppointments;
-    _degree = degree;
-    _specialism = specialism;
+    degree = degree;
+    specialism = specialism;
     _experience = experience;
     _qualifications = qualifications;
   }
 
   DoctorDetails.fromJson(dynamic json) {
     _id = json['id'];
-    _name = json['name'];
-    _avatar = json['avatar'];
+    name = json['name'];
+    avatar = json['avatar'];
     _rating = json['rating'];
-    _phone = json['phone'];
+    phone = json['phone'];
     _isRecommended = json['isRecommended'] == 1;
-    _description = json['description'];
+    description = json['description'];
     _completedAppointments = json['completedAppointments'];
-    _degree = json['degree'] != null ? Degree.fromJson(json['degree']) : null;
-    _specialism = json['specialism'] != null
-        ? Specialism.fromJson(json['specialism'])
-        : null;
+    degree = Degree.fromJson(json['degree']);
+    specialism = Specialism.fromJson(json['specialism']);
     if (json['experiences'] != null) {
       _experience = [];
       json['experiences'].forEach((v) {
@@ -67,29 +65,23 @@ class DoctorDetails {
     }
   }
   int? _id;
-  String? _name;
-  String? _avatar;
+  late String name;
+  String? avatar;
   num? _rating;
-  String? _phone;
+  late String phone;
   late bool _isRecommended;
-  String? _description;
+  String? description;
   int? _completedAppointments;
-  Degree? _degree;
-  Specialism? _specialism;
+  late Degree degree;
+  late Specialism specialism;
   List<Experience>? _experience;
   List<Qualification>? _qualifications;
   List<HealthCenter>? _healthCenters;
 
   int? get id => _id;
-  String? get name => _name;
-  String? get avatar => _avatar;
   num? get rating => _rating;
-  String? get phone => _phone;
   bool get isRecommended => _isRecommended;
-  String? get description => _description;
   int? get completedAppointments => _completedAppointments;
-  Degree? get degree => _degree;
-  Specialism? get specialism => _specialism;
   List<Experience> get experience => _experience ?? [];
   List<Qualification>? get qualifications => _qualifications;
   List<HealthCenter> get healthCenters => _healthCenters ?? [];
@@ -104,13 +96,15 @@ class DoctorDetails {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['name'] = _name;
-    map['avatar'] = _avatar;
+    map['name'] = name;
+    map['avatar'] = avatar;
     map['rating'] = _rating;
-    map['phone'] = _phone;
-    map['isRecommended'] = _isRecommended;
-    map['description'] = _description;
+    map['phone'] = phone;
+    map['isRecommended'] = isRecommended;
+    map['description'] = description;
     map['completedAppointments'] = _completedAppointments;
+    map['degree'] = degree.toJson();
+    map['specialism'] = specialism.toJson();
 
     return map;
   }

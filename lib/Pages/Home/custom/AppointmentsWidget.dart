@@ -25,7 +25,7 @@ class AppointmentsWidget extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 9.h),
           itemBuilder: (_, index) {
             if (appointments.isEmpty) {
-              return const NoDataWidget(message: "No appointments Yet!");
+              return NoDataWidget(message: "No appointments Yet!", top: 35.h);
             } else {
               return AppointmentCard(
                 appointment: appointments[index],

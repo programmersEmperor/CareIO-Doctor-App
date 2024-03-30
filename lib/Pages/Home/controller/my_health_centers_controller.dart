@@ -197,7 +197,7 @@ class MyHealthCentersController extends GetxController with GetTickerProviderSta
     try{
       final List<HealthCenter> healthCentersRequests =[];
       healthCentersRequestsIsLoading(true);
-      var response = await _apiService.fetchMyHealthCenters(params: {'page': pageKey });
+      var response = await _apiService.fetchHealthCentersRequests(params: {'page': pageKey });
       healthCentersRequestsIsLoading(false);
       if (response == null) return;
       debugPrint("my health center request: ${response.data['result']['data']}");
@@ -220,7 +220,8 @@ class MyHealthCentersController extends GetxController with GetTickerProviderSta
 
   Future<void> acceptHealthCenterRequests(HealthCenter healthCenter) async {
     try{
-      await _apiService.acceptHealthCenterRequest(id: healthCenter.id!);
+      await _apiService.acceptHealthCenterRequest(id: healthCenter.clinics.first.id!);
+      healthCentersRequestsPagingController.refresh();
     }
     catch (e){
       throw e;
@@ -229,7 +230,9 @@ class MyHealthCentersController extends GetxController with GetTickerProviderSta
 
   Future<void> cancelHealthCenterRequests(HealthCenter healthCenter) async {
     try{
-      await _apiService.cancelHealthCenterRequest(id: healthCenter.id!);
+      await _apiService.cancelHealthCenterRequest(id: healthCenter.clinics.first.id!);
+      healthCentersRequestsPagingController.refresh();
+
     }
     catch (e){
       throw e;

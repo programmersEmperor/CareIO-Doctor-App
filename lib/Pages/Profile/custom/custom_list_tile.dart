@@ -24,7 +24,7 @@ class CustomListTile extends StatelessWidget{
     return Padding(
       padding: EdgeInsets.only(top: 15.sp, left: 10.sp, right: 10.sp),
       child: Obx(()=> Opacity(
-        opacity: isLoading.isTrue ? 0.7: 1,
+        opacity: isLoading.isTrue ? 0.5: 1,
         child: Card(
           elevation: 15,
           shadowColor: Colors.grey.shade50,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/connectivity_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/main_colored_button.dart';
+import 'package:careio_doctor_version/Components/SharedWidgets/no_data_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/text_input_field.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Models/DoctorDetails.dart';
@@ -36,22 +37,29 @@ class ProfileEditExperiences extends StatelessWidget{
             child: ConnectivityWidget(
               child: PagedListView<int, Experience>(
                 builderDelegate: PagedChildBuilderDelegate<Experience>(
+                  animateTransitions: true,
+                  noItemsFoundIndicatorBuilder: (_)=> Center(
+                    child: NoDataWidget(message: "No Added Experience Yet!", top: 0),
+                  ),
                   firstPageProgressIndicatorBuilder: (_) =>
                       SpinKitFadingCircle(
                         color: AppColors.primaryColor,
                       ),
-                  itemBuilder: (context, item, index) => CustomListTile(
-                          title: "here is the title",
-                          subTitle: "here is the subtitle",
-                          from: "2020/4/4",
-                          to: "2020/4/4",
-                          onEdit: (){
-                            controller.editExperienceBottomSheet(item);
-                          },
-                          onDelete: () async {
-                            await controller.removeExperience(experience: item);
-                          },
-                        ),
+                  itemBuilder: (context, item, index) => Padding(
+                    padding: EdgeInsets.only(bottom: controller.experiencePagingController.itemList != null && index == controller.experiencePagingController.itemList!.length -1 ? 80 : 0),
+                    child: CustomListTile(
+                            title: item.position,
+                            subTitle: item.place,
+                            from: item.from,
+                            to: item.to,
+                            onEdit: (){
+                              controller.editExperienceBottomSheet(item);
+                            },
+                            onDelete: () async {
+                              await controller.removeExperience(experience: item);
+                            },
+                          ),
+                  ),
                 ),
                 pagingController: controller.experiencePagingController,
               ),

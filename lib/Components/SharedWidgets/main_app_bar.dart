@@ -20,72 +20,69 @@ class MainAppBar extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: GestureDetector(
-                onTap: () => Get.toNamed(ProfilePage.id),
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 7,
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 7,
+                  ),
+                  if (doctorUser.avatar == null || doctorUser.avatar!.isEmpty) ...[
+                    Container(
+                      height: 6.h,
+                      width: 10.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.secondaryColor,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Icon(
+                          Boxicons.bx_user,
+                          size: 25.sp,
+                          color: AppColors.primaryColor,
+                        )
+                      ),
                     ),
-                    if (doctorUser.avatar == null || doctorUser.avatar!.isEmpty) ...[
-                      Container(
-                        height: 6.h,
-                        width: 10.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: AppColors.secondaryColor,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Icon(
-                            Boxicons.bx_user,
-                            size: 25.sp,
-                            color: AppColors.primaryColor,
-                          )
-                        ),
-                      ),
-                    ] else ...[
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(doctorUser.avatar ?? ""),
-                              fit: BoxFit.cover,
-                            )),
-                        height: 5.h,
-                        width: 10.w,
-                      ),
-                    ],
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              doctorUser.name ?? "",
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              TimeOfDay.now().period == DayPeriod.am? AppStrings.goodMorning.tr : AppStrings.goodEvening.tr,
-                              style: TextStyle(
-                                  fontSize: 8.sp,
-                                  color: Colors.black38,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                          ],
-                        ),
-                      ),
+                  ] else ...[
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(doctorUser.avatar ?? ""),
+                            fit: BoxFit.cover,
+                          )),
+                      height: 5.h,
+                      width: 10.w,
                     ),
                   ],
-                ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            doctorUser.name ?? "",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            TimeOfDay.now().period == DayPeriod.am? AppStrings.goodMorning.tr : AppStrings.goodEvening.tr,
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                color: Colors.black38,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

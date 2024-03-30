@@ -30,6 +30,7 @@ class Degree {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['id'] = _id;
     map['nameAr'] = _nameAr;
     map['nameEn'] = _nameEn;
     return map;

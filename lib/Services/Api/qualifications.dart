@@ -51,7 +51,7 @@ class QualificationsApiService {
     try {
       isLoading(true);
       var response = await _apiService.getRequest(
-        url: '/qualifications/remove/${id}',
+        url: '/qualifications/delete/${id}',
       );
       isLoading(false);
       return response;
