@@ -18,7 +18,7 @@ import 'package:careio_doctor_version/Pages/Profile/profile_edit.dart';
 import 'package:careio_doctor_version/Pages/Profile/profile_page.dart';
 import 'package:careio_doctor_version/Services/Api/degrees.dart';
 import 'package:careio_doctor_version/Services/Api/experiences.dart';
-import 'package:careio_doctor_version/Services/Api/patient.dart';
+import 'package:careio_doctor_version/Services/Api/doctorUser.dart';
 import 'package:careio_doctor_version/Services/Api/qualifications.dart';
 import 'package:careio_doctor_version/Services/Api/specializations.dart';
 import 'package:careio_doctor_version/Services/CachingService/user_session.dart';
@@ -36,7 +36,7 @@ import 'package:sizer/sizer.dart';
 class ProfilePageController extends GetxController
     with GetTickerProviderStateMixin {
   Rx<DoctorDetails> doctorUser = Get.find<UserSession>().doctorUser.obs;
-  final PatientApiService _apiService = Get.find<PatientApiService>();
+  final DoctorUserApiService _apiService = Get.find<DoctorUserApiService>();
   final SpecializationApiService specializationApiService = Get.find<SpecializationApiService>();
   final DegreesApiService degreeApiService = Get.find<DegreesApiService>();
   final ExperiencesApiService _experienceApiService = Get.find<ExperiencesApiService>();
@@ -143,8 +143,8 @@ class ProfilePageController extends GetxController
         name: name.text,
         avatar: getImage,
         phone: phone.text,
-        specialismId: updatedSpecialism.value ?? doctorUser.value.specialism!.id,
-        degreeId: updatedDegree.value ?? doctorUser.value.degree!.id,
+        specialismId: updatedSpecialism.value ?? doctorUser.value.specialism.id,
+        degreeId: updatedDegree.value ?? doctorUser.value.degree.id,
         description: description.text,
       );
       isPersonalInfoButtonLoading(false);
@@ -170,6 +170,9 @@ class ProfilePageController extends GetxController
     }
     catch(e){
       isPersonalInfoButtonLoading(false);
+      showSnack(
+          title: "Error",
+          description: "$e");
     }
   }
 

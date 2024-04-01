@@ -16,7 +16,7 @@ import 'package:careio_doctor_version/Pages/Notifications/notifications_page.dar
 import 'package:careio_doctor_version/Pages/Profile/profile_page.dart';
 import 'package:careio_doctor_version/Services/Api/degrees.dart';
 import 'package:careio_doctor_version/Services/Api/home.dart';
-import 'package:careio_doctor_version/Services/Api/patient.dart';
+import 'package:careio_doctor_version/Services/Api/doctorUser.dart';
 import 'package:careio_doctor_version/Services/Api/specializations.dart';
 import 'package:careio_doctor_version/Services/Api/wallets.dart';
 import 'package:careio_doctor_version/Services/CachingService/user_session.dart';
@@ -38,7 +38,7 @@ class HomePageController extends GetxController
 
   HomeApiService apiService = Get.find<HomeApiService>();
   WalletsApiService walletsApiService = Get.find<WalletsApiService>();
-  PatientApiService patientApiService = Get.find<PatientApiService>();
+  DoctorUserApiService patientApiService = Get.find<DoctorUserApiService>();
 
   RxBool get isLoading => apiService.isLoading;
   RxBool get walletIsLoading => walletsApiService.isLoading;

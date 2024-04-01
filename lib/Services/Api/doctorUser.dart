@@ -4,7 +4,7 @@ import 'package:careio_doctor_version/Services/Api/base/base.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 
-class PatientApiService {
+class DoctorUserApiService {
   final BaseApi _apiService = BaseApi();
 
   Future<dynamic> update(
@@ -48,7 +48,7 @@ class PatientApiService {
   Future<dynamic> resetPassword(
       {required String password, required String oldPassword}) async {
     var response = await _apiService.putRequest(
-        url: 'patients/resetPassword',
+        url: '/resetPassword',
         body: {"oldPassword": oldPassword, "newPassword": password});
     return response;
   }

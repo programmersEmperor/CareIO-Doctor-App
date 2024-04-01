@@ -17,7 +17,7 @@ class Experience {
 
   Experience.fromJson(dynamic json) {
     _id = json['id'];
-    _place = json['palce'];
+    _place = json['place'];
     _position = json['position'];
     _from = json['from'];
     _to = json['to'];

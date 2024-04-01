@@ -12,7 +12,7 @@ import 'package:careio_doctor_version/Services/Api/home.dart';
 import 'package:careio_doctor_version/Services/Api/hospitals.dart';
 import 'package:careio_doctor_version/Services/Api/my_health_centers.dart';
 import 'package:careio_doctor_version/Services/Api/notification.dart';
-import 'package:careio_doctor_version/Services/Api/patient.dart';
+import 'package:careio_doctor_version/Services/Api/doctorUser.dart';
 import 'package:careio_doctor_version/Services/Api/qualifications.dart';
 import 'package:careio_doctor_version/Services/Api/specializations.dart';
 import 'package:careio_doctor_version/Services/Api/wallets.dart';
@@ -25,7 +25,7 @@ class BindingService extends Bindings {
     Get.put(ConnectivityHandler());
     Get.lazyPut(() => AuthenticationApiService(), fenix: true);
     Get.lazyPut(() => AuthenticationController(), fenix: true);
-    Get.lazyPut(() => PatientApiService(), fenix: true);
+    Get.lazyPut(() => DoctorUserApiService(), fenix: true);
     Get.put(AppointmentApiService(), permanent: true);
     Get.lazyPut(() => DoctorsApiService(), fenix: true);
     Get.lazyPut(() => HospitalApiService(), fenix: true);
