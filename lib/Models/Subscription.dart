@@ -27,9 +27,9 @@ class Subscription {
     required String nameEn,
   }) =>
       Subscription(
-        id: id ?? _id,
-        nameAr: nameAr ?? _nameAr,
-        nameEn: nameEn ?? _nameEn,
+        id: id,
+        nameAr: nameAr,
+        nameEn: nameEn,
       );
   int get id => _id;
   String get nameAr => _nameAr;

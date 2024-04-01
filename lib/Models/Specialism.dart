@@ -30,9 +30,9 @@ class Specialism {
     required String nameEn,
   }) =>
       Specialism(
-        id: id ?? _id,
-        nameAr: nameAr ?? _nameAr,
-        nameEn: nameEn ?? _nameEn,
+        id: id,
+        nameAr: nameAr,
+        nameEn: nameEn,
       );
   int get id => _id;
   String get nameAr => _nameAr;

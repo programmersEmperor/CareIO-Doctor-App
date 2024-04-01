@@ -6,7 +6,6 @@ import 'package:careio_doctor_version/Pages/Authentication/newPassword/newPasswo
 import 'package:careio_doctor_version/Pages/Authentication/otp/otp.dart';
 import 'package:careio_doctor_version/Pages/Home/home_page.dart';
 import 'package:careio_doctor_version/Services/Api/authentication.dart';
-import 'package:careio_doctor_version/Services/Api/doctorUser.dart';
 import 'package:careio_doctor_version/Services/CachingService/user_session.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:careio_doctor_version/Utils/snackbar.dart';

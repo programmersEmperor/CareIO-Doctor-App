@@ -1,8 +1,5 @@
-import 'package:careio_doctor_version/Models/HealthCenter.dart';
-import 'package:careio_doctor_version/Pages/Doctors/controller/doctor_profile_ui_controller.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 typedef SelectableDayPredicate = bool Function(DateTime day);

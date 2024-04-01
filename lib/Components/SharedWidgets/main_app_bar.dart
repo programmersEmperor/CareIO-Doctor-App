@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Models/DoctorDetails.dart';
-import 'package:careio_doctor_version/Pages/Profile/profile_page.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
@@ -61,7 +60,7 @@ class MainAppBar extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            doctorUser.name ?? "",
+                            doctorUser.name,
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.black,
