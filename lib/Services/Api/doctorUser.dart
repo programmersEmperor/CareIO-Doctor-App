@@ -24,6 +24,7 @@ class DoctorUserApiService {
             'avatar': avatar.path.isNotEmpty
                 ? await dio.MultipartFile.fromFile(avatar.path)
                 : null,
+            'phone': phone,
             'specialismId': specialismId,
             'degreeId': degreeId,
             'description': description,
