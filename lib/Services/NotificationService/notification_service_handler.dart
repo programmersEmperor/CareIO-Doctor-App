@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:careio_doctor_version/Pages/Home/controller/appointment_controller.dart';
+import 'package:careio_doctor_version/Pages/Home/controller/my_health_centers_controller.dart';
+import 'package:careio_doctor_version/Pages/Home/my_health_centers_page.dart';
 import 'package:careio_doctor_version/Services/CachingService/user_session.dart';
 import 'package:careio_doctor_version/Constants/appointment_enum.dart';
 import 'package:careio_doctor_version/firebase_options.dart';
@@ -53,17 +55,17 @@ abstract class NotificationServiceHandler {
   static void _configureFirebaseMessaging() {
     try {
       FirebaseMessaging.onMessage.listen((event) {
-        final AppointmentController appointmentController = Get.put(AppointmentController());
-        appointmentController.appointmentsPagingControllers[AppointmentTypes.upcoming.index].refresh();
+        final MyHealthCentersController myHealthCentersController = Get.put(MyHealthCentersController());
+        myHealthCentersController.healthCentersRequestsPagingController.refresh();
         showLocalNotification(event.notification!.toMap(), event.data);
-        if (event.data['status'] != null) {
-          if (event.data['status'] == AppointmentStatus.accepted.index.toString()) {
-            scheduleLocalNotification(event.data);
-          }
-          else if (event.data['status'] == AppointmentStatus.rejected.index.toString()) {
-            unscheduleLocalNotification(event.data['id']);
-          }
-        }
+        // if (event.data['status'] != null) {
+        //   if (event.data['status'] == AppointmentStatus.accepted.index.toString()) {
+        //     scheduleLocalNotification(event.data);
+        //   }
+        //   else if (event.data['status'] == AppointmentStatus.rejected.index.toString()) {
+        //     unscheduleLocalNotification(event.data['id']);
+        //   }
+        // }
       });
     }
     catch(e){
@@ -71,46 +73,46 @@ abstract class NotificationServiceHandler {
     }
   }
 
-  static void unscheduleLocalNotification(int id) async{
-    await flutterLocalNotificationsPlugin.cancel(id);
-  }
+  // static void unscheduleLocalNotification(int id) async{
+  //   await flutterLocalNotificationsPlugin.cancel(id);
+  // }
 
-  static void scheduleLocalNotification(Map<String, dynamic> data) async{
-    try{
-      debugPrint("scheduleLocalNotification at :${tz.TZDateTime.now(tz.local).add(Duration(seconds: 5)).toString()}");
-      debugPrint("scheduleLocalNotification at :${tz.TZDateTime.now(tz.local).toString()}");
-      var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-        'all-notifications-channel',
-        'all-notifications',
-        channelDescription: 'all-notifications-description',
-        importance: Importance.max,
-        priority: Priority.high,
-        icon: '@drawable/careio_launcher',
-        largeIcon: DrawableResourceAndroidBitmap('@drawable/careio_launcher'),
-        channelShowBadge: true,
-        enableLights: true,
-        enableVibration: true,
-        playSound: true,
-      );
-      var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-      );
-
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-          int.parse(data['id']),
-          Get.locale.toString() == 'ar_AR'? data['sTitleAr'] : data['sTitleEn'],
-          Get.locale.toString() == 'ar_AR'? data['sBodyAr'] : data['sBodyEn'],
-          tz.TZDateTime.from(DateTime.parse('${data['date']} ${data['time']}'), tz.local).subtract(Duration(days: 1)),
-          // tz.TZDateTime.now(tz.local).add(Duration(seconds: 5)),
-          platformChannelSpecifics,
-          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
-    }
-    catch (e){
-      debugPrint("scheduleLocalNotification error ${e.toString()}");
-    }
-
-  }
+  // static void scheduleLocalNotification(Map<String, dynamic> data) async{
+  //   try{
+  //     debugPrint("scheduleLocalNotification at :${tz.TZDateTime.now(tz.local).add(Duration(seconds: 5)).toString()}");
+  //     debugPrint("scheduleLocalNotification at :${tz.TZDateTime.now(tz.local).toString()}");
+  //     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+  //       'all-notifications-channel',
+  //       'all-notifications',
+  //       channelDescription: 'all-notifications-description',
+  //       importance: Importance.max,
+  //       priority: Priority.high,
+  //       icon: '@drawable/careio_launcher',
+  //       largeIcon: DrawableResourceAndroidBitmap('@drawable/careio_launcher'),
+  //       channelShowBadge: true,
+  //       enableLights: true,
+  //       enableVibration: true,
+  //       playSound: true,
+  //     );
+  //     var platformChannelSpecifics = NotificationDetails(
+  //       android: androidPlatformChannelSpecifics,
+  //     );
+  //
+  //     await flutterLocalNotificationsPlugin.zonedSchedule(
+  //         int.parse(data['id']),
+  //         Get.locale.toString() == 'ar_AR'? data['sTitleAr'] : data['sTitleEn'],
+  //         Get.locale.toString() == 'ar_AR'? data['sBodyAr'] : data['sBodyEn'],
+  //         tz.TZDateTime.from(DateTime.parse('${data['date']} ${data['time']}'), tz.local).subtract(Duration(days: 1)),
+  //         // tz.TZDateTime.now(tz.local).add(Duration(seconds: 5)),
+  //         platformChannelSpecifics,
+  //         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+  //         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+  //   }
+  //   catch (e){
+  //     debugPrint("scheduleLocalNotification error ${e.toString()}");
+  //   }
+  //
+  // }
 
   static void showLocalNotification(Map<String, dynamic> message, Map<String, dynamic> data) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(

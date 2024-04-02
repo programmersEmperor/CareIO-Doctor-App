@@ -20,7 +20,7 @@ import 'package:timezone/standalone.dart' as tz;
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // NotificationServiceHandler.showLocalNotification(message.notification!.toMap());
   if(message.data['status'] != null && message.data['status'] == AppointmentStatus.accepted){
-    NotificationServiceHandler.scheduleLocalNotification(message.data);
+    // NotificationServiceHandler.scheduleLocalNotification(message.data);
   }
 
 }

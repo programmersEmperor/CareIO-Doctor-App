@@ -112,7 +112,7 @@ class AppointmentController extends GetxController with GetTickerProviderStateMi
 
         Get.close(0);
         showSnack(title: "Appointment canceled", description: "Your appointment has been canceled");
-        NotificationServiceHandler.unscheduleLocalNotification(id);
+        // NotificationServiceHandler.unscheduleLocalNotification(id);
       }
     }
     catch(e){
@@ -146,7 +146,7 @@ class AppointmentController extends GetxController with GetTickerProviderStateMi
 
         Get.close(0);
         showSnack(title: "Appointment Rescheduled", description: "Your appointment has been rescheduled to $date at $time");
-        NotificationServiceHandler.unscheduleLocalNotification(appointment.id);
+        // NotificationServiceHandler.unscheduleLocalNotification(appointment.id);
       }
     } catch (e) {
       cancelLoading(false);
