@@ -14,6 +14,7 @@ class DoctorUserApiService {
         required String description,
         required int specialismId,
         required int degreeId,
+        bool removeAvatar = false,
       }) async {
     try {
       var response = await _apiService.postRequest(
@@ -26,11 +27,25 @@ class DoctorUserApiService {
             'specialismId': specialismId,
             'degreeId': degreeId,
             'description': description,
-          }));
+          }),
+          params: removeAvatar ? {"removeAvatar": 1} : null,
+      );
 
       return response;
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  Future<dynamic> getDoctorUserData() async {
+    try {
+      var response = await _apiService.getRequest(
+        url: '/auther-data',
+      );
+      debugPrint('Status Code : ${response.statusCode}');
+      return response;
+    } catch (e) {
+      throw e;
     }
   }
 

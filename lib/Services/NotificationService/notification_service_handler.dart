@@ -54,7 +54,7 @@ abstract class NotificationServiceHandler {
     try {
       FirebaseMessaging.onMessage.listen((event) {
         final AppointmentController appointmentController = Get.put(AppointmentController());
-        appointmentController.initializeAppointments(status: AppointmentTypes.upcoming);
+        appointmentController.appointmentsPagingControllers[AppointmentTypes.upcoming.index].refresh();
         showLocalNotification(event.notification!.toMap(), event.data);
         if (event.data['status'] != null) {
           if (event.data['status'] == AppointmentStatus.accepted.index.toString()) {

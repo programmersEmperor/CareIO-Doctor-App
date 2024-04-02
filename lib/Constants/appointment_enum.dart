@@ -14,12 +14,13 @@ enum AppointmentStatus {
 }
 
 enum AppointmentTypes {
-  upcoming([AppointmentStatus.pending, AppointmentStatus.confirmed, AppointmentStatus.accepted]),
-  completed([AppointmentStatus.completed, AppointmentStatus.unattended]),
-  canceled([AppointmentStatus.rejected, AppointmentStatus.canceled]);
+  upcoming([AppointmentStatus.pending, AppointmentStatus.confirmed, AppointmentStatus.accepted],  AppStrings.upcoming),
+  completed([AppointmentStatus.completed, AppointmentStatus.unattended], AppStrings.completed),
+  canceled([AppointmentStatus.rejected, AppointmentStatus.canceled], AppStrings.canceled);
 
   final List<AppointmentStatus> value;
-  const AppointmentTypes(this.value);
+  final String label;
+  const AppointmentTypes(this.value, this.label);
 }
 
 

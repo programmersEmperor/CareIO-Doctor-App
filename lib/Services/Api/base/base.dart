@@ -37,8 +37,8 @@ class BaseApi {
     return response;
   }
 
-  Future<Response> postRequest({required url, required dynamic body}) async {
-    Response response = await _dio.post(url, data: body);
+  Future<Response> postRequest({required url, required dynamic body, Map<String, dynamic>? params }) async {
+    Response response = await _dio.post(url, data: body, queryParameters: params);
     return response;
   }
 

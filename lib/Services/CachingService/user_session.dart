@@ -34,8 +34,11 @@ class UserSession {
     doctorUser = DoctorDetails.fromJson(data['doctor']);
     await box.put(_doctorKey, jsonEncode(data['doctor']));
 
-    token = data['token'];
-    await box.put(_tokenKey, token);
+    if(data['token'] != null){
+      debugPrint("Saved token $token");
+      token = data['token'];
+      await box.put(_tokenKey, token);
+    }
     await box.close();
 
     debugPrint("token ${data['token']}");

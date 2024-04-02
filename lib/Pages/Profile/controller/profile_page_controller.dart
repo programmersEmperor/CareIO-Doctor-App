@@ -32,6 +32,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePageController extends GetxController
     with GetTickerProviderStateMixin {
@@ -146,23 +147,15 @@ class ProfilePageController extends GetxController
         specialismId: updatedSpecialism.value ?? doctorUser.value.specialism.id,
         degreeId: updatedDegree.value ?? doctorUser.value.degree.id,
         description: description.text,
+        removeAvatar: changeImage.isTrue && image.value.path.isEmpty
       );
       isPersonalInfoButtonLoading(false);
 
       if (response == null) return;
       var decodedResponse = json.decode(response.toString());
-      Get.find<UserSession>().doctorUser.name = decodedResponse["result"]["name"];
-      Get.find<UserSession>().doctorUser.phone = decodedResponse["result"]["phone"];
-      Get.find<UserSession>().doctorUser.avatar = decodedResponse["result"]["avatar"];
-      Get.find<UserSession>().doctorUser.specialism = Get.find<UserSession>().specializations.firstWhere((specialism) => specialism.id == updatedSpecialism.value);
-      Get.find<UserSession>().doctorUser.degree = Get.find<UserSession>().degrees.firstWhere((degree) => degree.id == updatedDegree.value);
-      Get.find<UserSession>().updateDoctorUser();
+      await Get.find<UserSession>().saveDoctorUser({'doctor': decodedResponse['result']});
 
-      Get.find<HomePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
-      Get.find<HomePageController>().doctorUser.refresh();
-      Get.find<ProfilePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
-      Get.find<ProfilePageController>().doctorUser.refresh();
-
+      refreshDoctorUserDataInOtherPages();
 
       showSnack(
           title: "Profile Updated",
@@ -484,4 +477,46 @@ class ProfilePageController extends GetxController
       throw e;
     }
   }
+
+  void refreshDoctorUserDataInOtherPages(){
+    Get.find<HomePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
+    Get.find<HomePageController>().doctorUser.refresh();
+
+    Get.find<ProfilePageController>().doctorUser.value = Get.find<UserSession>().doctorUser;
+    Get.find<ProfilePageController>().doctorUser.refresh();
+  }
+
+  Future<void> refreshDoctorUserData() async {
+    try{
+
+      var response = await _apiService.getDoctorUserData();
+      if(response.statusCode != 200) return;
+      final doctorUserData = {"doctor": response.data['result']};
+      await Get.find<UserSession>().saveDoctorUser(doctorUserData);
+
+      refreshDoctorUserDataInOtherPages();
+    }
+    catch(e){
+      showSnack(title: "Error", description: e.toString());
+    }
+  }
+
+  void openWhatsapp() async {
+    String contact = "+967774569423";
+    String message = Get.locale.toString() == 'ar_Ar' ? 'مربحا! احتاج الى مساعدة' : 'Hi, I need some help';
+    var androidUrl = "whatsapp://send?phone=$contact&text=$message";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(message)}";
+
+    try{
+      if(Platform.isIOS){
+        await launchUrl(Uri.parse(iosUrl));
+      }
+      else{
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } on Exception{
+      showSnack(title: "Error", description: "Whatsapp is not installed");
+    }
+  }
+
 }

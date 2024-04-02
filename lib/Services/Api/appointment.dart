@@ -3,10 +3,8 @@ import 'package:careio_doctor_version/Services/Api/base/base.dart';
 class AppointmentApiService {
   final BaseApi _apiService = BaseApi();
 
-  Future<dynamic> fetchAppointments(
-      {required Map<String, dynamic> params}) async {
-    return await _apiService.getRequest(
-        url: '/appointments', params: params);
+  Future<dynamic> fetchAppointments({required Map<String, dynamic> params}) async {
+    return await _apiService.getRequest(url: '/appointments', params: params);
   }
 
   Future<dynamic> cancelAppointment({required int id}) async {

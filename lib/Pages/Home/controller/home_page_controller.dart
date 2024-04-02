@@ -38,7 +38,7 @@ class HomePageController extends GetxController
 
   HomeApiService apiService = Get.find<HomeApiService>();
   WalletsApiService walletsApiService = Get.find<WalletsApiService>();
-  DoctorUserApiService patientApiService = Get.find<DoctorUserApiService>();
+  DoctorUserApiService doctorUserApiService = Get.find<DoctorUserApiService>();
 
   RxBool get isLoading => apiService.isLoading;
   RxBool get walletIsLoading => walletsApiService.isLoading;
@@ -64,7 +64,7 @@ class HomePageController extends GetxController
   }
 
   Future<void> fetchPlans() async {
-    var response = await patientApiService.getPlans();
+    var response = await doctorUserApiService.getPlans();
     if (response == null) return;
     debugPrint("Response is ${response.data['result']}");
 
