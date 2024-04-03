@@ -295,7 +295,7 @@ class HospitalProfile extends StatelessWidget {
                                         height: 180,
                                         child: Swiper(
                                           itemCount: controller.healthCenter.doctor.length,
-                                          autoplayDelay: 6000,
+                                          autoplayDelay: 4000,
                                           duration: 3000,
                                           autoplay: true,
                                           itemBuilder: (_, index) =>

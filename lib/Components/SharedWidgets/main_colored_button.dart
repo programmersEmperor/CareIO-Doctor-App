@@ -1,5 +1,7 @@
+import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Services/connectivityService/connectivity_service.dart';
 import 'package:careio_doctor_version/Theme/app_colors.dart';
+import 'package:careio_doctor_version/Utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -30,7 +32,9 @@ class MainColoredButton extends StatelessWidget {
         onPressed: isLoading == false.obs ||
             Get.find<ConnectivityHandler>().isOnline.isTrue
             ? onPress
-            : () => {},
+            : () {
+              showSnack(title: AppStrings.connectionError.tr, description: AppStrings.connectionErrorDesc.tr);
+            },
         style: ButtonStyle(
           fixedSize: MaterialStatePropertyAll(
             Size(100.w, 6.h),
