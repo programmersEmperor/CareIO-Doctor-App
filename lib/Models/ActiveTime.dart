@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class ActiveTimes {
   ActiveTimes({
     int? id,
@@ -26,6 +28,13 @@ class ActiveTimes {
   int? get day => _day;
   String? get from => _from;
   String? get to => _to;
+
+  String time12(String? time) {
+    if (time == null) return "";
+
+    DateTime dateTime = DateFormat("HH:mm:ss").parse(time);
+    return DateFormat("h:mm a").format(dateTime);
+  }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

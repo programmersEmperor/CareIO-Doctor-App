@@ -72,19 +72,22 @@ class OTPPage extends StatelessWidget {
                 FormBuilder(
                   child: Column(
                     children: [
-                      OtpTextField(
-                        numberOfFields: 6,
-                        focusedBorderColor: AppColors.primaryColor,
-                        margin: EdgeInsets.symmetric(horizontal: 3.sp),
-                        borderColor: CupertinoColors.systemGrey5,
-                        showFieldAsBox: true,
-                        fieldWidth: 37.sp,
-                        keyboardType: TextInputType.number,
-                        borderRadius: BorderRadius.circular(10.sp),
-                        onCodeChanged: (String code) {},
-                        onSubmit: (String verificationCode) {
-                          controller.otpCode = verificationCode;
-                        }, // end onSubmit
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: OtpTextField(
+                          numberOfFields: 6,
+                          focusedBorderColor: AppColors.primaryColor,
+                          margin: EdgeInsets.symmetric(horizontal: 3.sp),
+                          borderColor: CupertinoColors.systemGrey5,
+                          showFieldAsBox: true,
+                          fieldWidth: 37.sp,
+                          keyboardType: TextInputType.number,
+                          borderRadius: BorderRadius.circular(10.sp),
+                          onCodeChanged: (String code) {},
+                          onSubmit: (String verificationCode) {
+                            controller.otpCode = verificationCode;
+                          }, // end onSubmit
+                        ),
                       ),
                       SizedBox(
                         height: 30.sp,

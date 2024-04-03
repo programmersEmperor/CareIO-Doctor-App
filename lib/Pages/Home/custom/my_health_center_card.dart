@@ -199,7 +199,7 @@ class _MyHealthCenterCardState extends State<MyHealthCenterCard> {
                         children: [
                           Icon(
                             Icons.star,
-                            color: Colors.orange,
+                            color: Colors.amber,
                             size: 12.sp,
                           ),
                           SizedBox(

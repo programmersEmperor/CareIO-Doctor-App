@@ -40,6 +40,17 @@ class HospitalCard extends StatelessWidget {
                       tag: "hospital${healthCenter!.id}",
                       child: healthCenter!.avatar != null
                           ? CachedNetworkImage(
+                            fadeInCurve: Curves.linear,
+                            placeholder: (context, string) => Container(
+                                height: 10.h,
+                                width: 20.w,
+                                decoration: BoxDecoration(
+                                    color: AppColors.secondaryColor),
+                                child: Icon(
+                                  Boxicons.bx_building_house,
+                                  size: 30.sp,
+                                  color: AppColors.primaryColor,
+                                )),
                               imageUrl: healthCenter!.avatar!,
                               width: 20.w,
                               height: 10.h,
@@ -123,7 +134,7 @@ class HospitalCard extends StatelessWidget {
                             if(healthCenter!.rating != null)...[
                               Icon(
                                 Icons.star,
-                                color: Colors.orange,
+                                color: Colors.amber,
                                 size: 10.sp,
                               ),
                               const SizedBox(

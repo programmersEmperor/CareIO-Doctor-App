@@ -22,7 +22,7 @@ class FilterBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int rating = 0;
-    int clinicId = 0;
+    int specialismId = 0;
     var selectedIdIndex = RxInt(-1);
     var selectedRatingIndex = RxInt(-1);
 
@@ -104,7 +104,7 @@ class FilterBottomSheet extends StatelessWidget {
               height: 10.sp,
             ),
             Text(
-              AppStrings.byClinic.tr,
+              AppStrings.bySpecialism.tr,
               style: TextStyle(fontSize: 12.sp),
             ),
             Wrap(
@@ -120,7 +120,7 @@ class FilterBottomSheet extends StatelessWidget {
                       title: Get.find<UserSession>().specializations[i].name,
                       onTap: () {
                         selectedIdIndex(i);
-                        clinicId = Get.find<UserSession>().specializations[i].id;
+                        specialismId = Get.find<UserSession>().specializations[i].id;
                       },
                     ),
                   ),
@@ -208,7 +208,7 @@ class FilterBottomSheet extends StatelessWidget {
                 onPress: () {
                   onTapFilter(
                     showRatingBy.isTrue? 1: 0,
-                    clinicId != 0 ? clinicId : null,
+                    specialismId != 0 ? specialismId : null,
                     showNearby.isTrue ? showNearby.value : null,
                   );
                 },

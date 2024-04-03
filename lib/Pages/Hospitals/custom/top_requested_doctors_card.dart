@@ -107,7 +107,7 @@ class TopRequestedDoctorsCard extends StatelessWidget {
                                 if(doctor.rating != null)...[
                                   Icon(
                                     Icons.star,
-                                    color: Colors.orange,
+                                    color: Colors.amber,
                                     size: 10.sp,
                                   ),
                                   SizedBox(

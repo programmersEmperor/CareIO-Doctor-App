@@ -22,7 +22,7 @@ import 'package:get/get.dart';
 class BindingService extends Bindings {
   @override
   void dependencies() {
-    Get.put(ConnectivityHandler());
+    Get.put(ConnectivityHandler(), permanent: true);
     Get.lazyPut(() => AuthenticationApiService(), fenix: true);
     Get.lazyPut(() => AuthenticationController(), fenix: true);
     Get.lazyPut(() => DoctorUserApiService(), fenix: true);

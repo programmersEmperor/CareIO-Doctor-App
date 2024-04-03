@@ -10,6 +10,7 @@ class MainColoredButton extends StatelessWidget {
   final VoidCallback? onPress;
   final double? elevation;
   final double fontSize;
+  Color? color;
   RxBool? isLoading = false.obs;
   MainColoredButton({
     super.key,
@@ -17,14 +18,17 @@ class MainColoredButton extends StatelessWidget {
     this.onPress,
     this.elevation,
     this.isLoading,
+    this.color,
     this.fontSize = 14,
-  });
+  }) {
+    this.color = this.color ?? AppColors.primaryColor;
+  }
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: isLoading == false.obs ||
-                Get.find<ConnectivityHandler>().isOnline.isTrue
+            Get.find<ConnectivityHandler>().isOnline.isTrue
             ? onPress
             : () => {},
         style: ButtonStyle(
@@ -32,10 +36,9 @@ class MainColoredButton extends StatelessWidget {
             Size(100.w, 6.h),
           ),
           elevation:
-              MaterialStatePropertyAll(onPress == null ? 0 : elevation ?? 15),
-          shadowColor: MaterialStatePropertyAll(AppColors.primaryColor),
-          backgroundColor: MaterialStatePropertyAll(
-              onPress == null ? Colors.black26 : AppColors.primaryColor),
+          MaterialStatePropertyAll(onPress == null ? 0 : elevation ?? 15),
+          shadowColor: MaterialStatePropertyAll(this.color),
+          backgroundColor: MaterialStatePropertyAll(onPress == null ? Colors.black26 : this.color),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.sp),
@@ -43,19 +46,19 @@ class MainColoredButton extends StatelessWidget {
           ),
         ),
         child: Obx(
-          () => (isLoading ?? false.obs).isTrue
+              () => (isLoading ?? false.obs).isTrue
               ? const Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: SpinKitFadingCircle(
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                )
+            padding: EdgeInsets.all(5.0),
+            child: SpinKitFadingCircle(
+              color: Colors.white,
+              size: 20.0,
+            ),
+          )
               : Text(
-                  text,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: fontSize),
-                ),
+            text,
+            style: TextStyle(
+                fontWeight: FontWeight.w600, fontSize: fontSize),
+          ),
         ));
   }
 }

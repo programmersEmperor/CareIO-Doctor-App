@@ -1,6 +1,7 @@
 import 'package:careio_doctor_version/Components/SharedWidgets/back_circle_button.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/connectivity_widget.dart';
 import 'package:careio_doctor_version/Components/SharedWidgets/main_colored_button.dart';
+import 'package:careio_doctor_version/Components/SharedWidgets/no_data_widget.dart';
 import 'package:careio_doctor_version/Localization/app_strings.dart';
 import 'package:careio_doctor_version/Models/Clinic.dart';
 import 'package:careio_doctor_version/Models/Doctor.dart';
@@ -182,6 +183,16 @@ class ClinicProfile extends StatelessWidget {
                                   // physics: const NeverScrollableScrollPhysics(),
                                   builderDelegate:
                                       PagedChildBuilderDelegate<Doctor>(
+                                        newPageProgressIndicatorBuilder: (_)=> Padding(
+                                          padding: const EdgeInsets.only(top: 20),
+                                          child: SpinKitFadingCircle(
+                                            color: AppColors.primaryColor,
+                                          ),
+                                        ),
+                                        animateTransitions: true,
+                                        noItemsFoundIndicatorBuilder: (_)=> Center(
+                                          child: NoDataWidget(message: "No Doctors Yet!", top: 0),
+                                        ),
                                     firstPageProgressIndicatorBuilder: (_) =>
                                         SpinKitFadingCircle(
                                       color: AppColors.primaryColor,

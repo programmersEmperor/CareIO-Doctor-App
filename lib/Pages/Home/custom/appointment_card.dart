@@ -71,7 +71,7 @@ class AppointmentCard extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.star,
-                                color: Colors.orange,
+                                color: Colors.amber,
                                 size: 12.sp,
                               ),
                               SizedBox(
@@ -80,7 +80,7 @@ class AppointmentCard extends StatelessWidget {
                               Text(
                                 appointment.rating!.toStringAsFixed(1),
                                 style: TextStyle(
-                                    color: Colors.orange, fontSize: 10.sp),
+                                    color: Colors.amber, fontSize: 10.sp),
                               ),
                             ],
                           ),
@@ -237,7 +237,7 @@ class AppointmentCard extends StatelessWidget {
               //                     decoration: BoxDecoration(
               //                       borderRadius: BorderRadius.circular(15.sp),
               //                       color: appointment.wallet.isEmpty && appointment.status != AppointmentStatus.completed.index
-              //                           ? Colors.orangeAccent.withOpacity(0.5)
+              //                           ? Colors.amberAccent.withOpacity(0.5)
               //                           : AppColors.secondaryColor,
               //                     ),
               //                     child: Stack(
@@ -251,7 +251,7 @@ class AppointmentCard extends StatelessWidget {
               //                                   ? Icons.timer
               //                                   : Icons.check,
               //                               color: appointment.wallet.isEmpty && appointment.status != AppointmentStatus.completed.index
-              //                                   ? Colors.orange
+              //                                   ? Colors.amber
               //                                   : AppColors.primaryColor,
               //                               size: 55.sp,
               //                             ),
@@ -267,7 +267,7 @@ class AppointmentCard extends StatelessWidget {
               //                                   style: TextStyle(
               //                                       fontWeight: FontWeight.bold,
               //                                       color: appointment.wallet.isEmpty && appointment.status != AppointmentStatus.completed.index
-              //                                           ? Colors.orange
+              //                                           ? Colors.amber
               //                                           : AppColors.primaryColor,
               //                                       fontSize: 12.sp),
               //                                 ),
@@ -279,7 +279,7 @@ class AppointmentCard extends StatelessWidget {
               //                                   style: TextStyle(
               //                                       fontWeight: FontWeight.bold,
               //                                       color: appointment.wallet.isEmpty && appointment.status != AppointmentStatus.completed.index
-              //                                           ? Colors.orange
+              //                                           ? Colors.amber
               //                                           : AppColors.primaryColor,
               //                                       fontSize: 12.sp),
               //                                 ),

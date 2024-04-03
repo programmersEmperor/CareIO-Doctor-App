@@ -123,6 +123,7 @@ class AppStrings {
   static const showNearBy = 'showNearBy';
   static const orderByRating = 'orderByRating ';
   static const byClinic = 'byClinic';
+  static const bySpecialism = 'bySpecialism';
   static const rial = 'rial';
   static const selectPaymentMethod = 'selectPaymentMethod';
   static const selectTime = 'selectTime';

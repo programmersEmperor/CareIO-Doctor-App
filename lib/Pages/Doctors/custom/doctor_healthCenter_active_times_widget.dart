@@ -55,7 +55,7 @@ class DoctorHealthCenterActiveTimeWidget extends StatelessWidget{
               child: Wrap(
                 children: activeTimes.map((time) =>
                     TimeSlotItem(
-                      time: "${time.from} - ${time.to}",
+                      time: "${time.time12(time.from)} - ${time.time12(time.to)}",
                       backgroundColor: AppColors.primaryColor,
                       fontColor: Colors.white,
                       iconColor: Colors.white,

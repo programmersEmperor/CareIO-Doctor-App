@@ -145,11 +145,11 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Card(
-                                  color: Colors.orange,
+                                  color: Colors.amber,
                                   elevation: 10,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(11.sp)),
-                                  shadowColor: Colors.orange,
+                                  shadowColor: Colors.amber,
                                   child: Stack(
                                     children: [
                                       PositionedDirectional(

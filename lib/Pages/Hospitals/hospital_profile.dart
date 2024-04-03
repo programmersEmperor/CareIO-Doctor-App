@@ -131,7 +131,7 @@ class HospitalProfile extends StatelessWidget {
                                                     if(controller.healthCenter.rating != null)...[
                                                       Icon(
                                                         Icons.star,
-                                                        color: Colors.orange,
+                                                        color: Colors.amber,
                                                         size: 15.sp,
                                                       ),
                                                       Text(

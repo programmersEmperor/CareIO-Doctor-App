@@ -1,3 +1,4 @@
+import 'package:careio_doctor_version/LifeCycleController.dart';
 import 'package:careio_doctor_version/Localization/localization_helper.dart';
 import 'package:careio_doctor_version/Pages/splash/splashPage.dart';
 import 'package:careio_doctor_version/Routing/app_routes.dart';
@@ -35,6 +36,7 @@ void main() async {
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('ar_short', timeago.ArShortMessages());
 
+  Get.put(LifeCycleController(), permanent: true);
   await Hive.initFlutter();
   runApp(const MyApp());
 }

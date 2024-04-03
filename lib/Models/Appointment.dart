@@ -81,7 +81,7 @@ class Appointment {
   String get time => _time;
   String get time12 {
     DateTime dateTime = DateFormat("HH:mm:ss").parse(_time);
-    return DateFormat("h:mm:ss a").format(dateTime);
+    return DateFormat("h:mm a").format(dateTime);
   }
   num get price => _price;
   Doctor get doctor => _doctor;

@@ -26,7 +26,7 @@ class DoctorGridWidget extends StatelessWidget {
           elevation: 0,
           color: Colors.white,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,6 +52,15 @@ class DoctorGridWidget extends StatelessWidget {
                           color: AppColors.primaryColor,
                         )
                             : CachedNetworkImage(
+                          fadeInCurve: Curves.linear,
+                          placeholder: (context, string) => Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: SvgPicture.asset(
+                              'assets/svgs/doctor_icon.svg',
+                              color: AppColors.primaryColor,
+
+                            ),
+                          ),
                           fit: BoxFit.cover,
                           width: 31.w,
                           imageUrl: doctor.avatar!,
@@ -61,39 +70,42 @@ class DoctorGridWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 5.sp, right: 5.sp, top: 2.sp),
-                  child: AutoSizeText(
-                    doctor.name!,
-                    style: TextStyle(
-                      fontSize: 8.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    overflowReplacement: Marquee(
-                      text: doctor.name!,
-                      blankSpace: 20.0,
-                      accelerationCurve: Curves.easeOut,
-                      velocity: 50.0,
-                      startPadding: 2.0,
-                      showFadingOnlyWhenScrolling: true,
-                      startAfter: 5.seconds,
-                      fadingEdgeEndFraction: 0.5.sp,
-                      fadingEdgeStartFraction: 0.5.sp,
-                      pauseAfterRound: 5.seconds,
-                      style: TextStyle(
-                        fontSize: 8.sp,
-                        fontWeight: FontWeight.w400,
+                  padding: EdgeInsets.only(left: 5.sp, right: 5.sp, top: 2.sp),
+                  child: Column(
+                    children: [
+                      AutoSizeText(
+                        doctor.name!,
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        overflowReplacement: Marquee(
+                          text: doctor.name!,
+                          blankSpace: 20.0,
+                          accelerationCurve: Curves.easeOut,
+                          velocity: 50.0,
+                          startPadding: 2.0,
+                          showFadingOnlyWhenScrolling: true,
+                          startAfter: 5.seconds,
+                          fadingEdgeEndFraction: 0.5.sp,
+                          fadingEdgeStartFraction: 0.5.sp,
+                          pauseAfterRound: 5.seconds,
+                          style: TextStyle(
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
-                    ),
+                      Text(
+                        (doctor.degree?.name ?? "") + " " + (doctor.specialism?.name ?? ""),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 7.sp,
+                            color: Colors.black45),
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  (doctor.degree?.name ?? "") + " " + (doctor.specialism?.name ?? ""),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 7.sp,
-                      color: Colors.black45),
                 ),
               ],
             ),

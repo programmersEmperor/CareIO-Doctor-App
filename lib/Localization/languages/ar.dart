@@ -125,6 +125,7 @@ Map<String, String> ar = {
   AppStrings.showNearBy : "ترتيب على حسب الاقرب مسافة",
   AppStrings.orderByRating : "ترتيب على حسب التقييم",
   AppStrings.byClinic : "على حسب العيادة",
+  AppStrings.bySpecialism : "على حسب التخصص",
   AppStrings.rial: "ريال",
   AppStrings.selectPaymentMethod: "الرجاء تحديد طريقة دفع",
   AppStrings.selectTime: "الرجاء تحديد وقت الموعد",

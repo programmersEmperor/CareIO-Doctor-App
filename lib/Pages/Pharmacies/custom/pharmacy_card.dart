@@ -66,7 +66,7 @@ class PharmacyCard extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.star,
-                                  color: Colors.orange,
+                                  color: Colors.amber,
                                   size: 10.sp,
                                 ),
                                 Text(

@@ -14,12 +14,12 @@ Map<String, String> en = {
           .capitalize!,
   AppStrings.introductionHeading: "\"Your Health In Digital Hands\"",
   AppStrings.createNewAccountSubtitle:
-      "Create account so you can explore and use all features of Healio app",
+      "Create account so you can explore and use all features of Careio app",
   AppStrings.alreadyHaveAccount: "Already Have Account ? Login",
   AppStrings.forgetPasswordSubtitle:
       "fill in your phone number and an OTP will be sent to your phone via SMS"
           .capitalize!,
-  AppStrings.sendOtp: "Send Otp",
+  AppStrings.sendOtp: "Send Code",
   AppStrings.codeSent: "Code Sent",
   AppStrings.codeSentSubtitle:
       "Code Has Been Sent To Your Phone Number Via SMS ",
@@ -133,6 +133,7 @@ Map<String, String> en = {
   AppStrings.showNearBy : "Order by distance",
   AppStrings.orderByRating : "Order by rating",
   AppStrings.byClinic : "by clinic",
+  AppStrings.bySpecialism : "by specialism",
   AppStrings.rial : "Rial",
   AppStrings.selectPaymentMethod: "Please select a payment method",
   AppStrings.selectTime: "Please select the appointment time",

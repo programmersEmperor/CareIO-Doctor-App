@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class BookAvailableTime {
   BookAvailableTime({
     String? time,
@@ -15,6 +17,12 @@ class BookAvailableTime {
   bool? _isAvailable;
 
   String get time => _time ?? "";
+  String get time12 {
+    if(_time == null) return "";
+
+    DateTime dateTime = DateFormat("HH:mm:ss").parse(_time!);
+    return DateFormat("h:mm a").format(dateTime);
+  }
   bool get isAvailable => _isAvailable ?? false;
 
   Map<String, dynamic> toJson() {

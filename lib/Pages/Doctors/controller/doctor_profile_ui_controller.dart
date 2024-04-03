@@ -78,7 +78,7 @@ class DoctorProfileUiController extends GetxController {
     for(HealthCenter healthCenter in healthCenters){
       final bool succeeded = healthCenter.clinics.any((clinic) {
         if(clinicId == null) return clinic.activeTimes.any((activeTime) => activeTime.day == day);
-        else return clinic.id! == clinicId! && clinic.activeTimes.any((activeTime) => activeTime.day == day) ;
+        else return clinic.id! == clinicId && clinic.activeTimes.any((activeTime) => activeTime.day == day) ;
       });
       if(succeeded){
         filteredHealthCenters.add(healthCenter);

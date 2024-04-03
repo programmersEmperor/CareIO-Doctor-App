@@ -1,5 +1,6 @@
 import 'package:careio_doctor_version/Models/ActiveTime.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class Clinic {
   Clinic({
@@ -38,6 +39,13 @@ class Clinic {
   num? get price => _price;
   String? get description => _description;
   List<ActiveTimes> get activeTimes => _activeTimes ?? [];
+
+  String time12(String? time) {
+    if (time == null) return "";
+
+    DateTime dateTime = DateFormat("HH:mm:ss").parse(time);
+    return DateFormat("h:mm a").format(dateTime);
+  }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

@@ -29,7 +29,7 @@ class AppointmentStateTitle extends StatelessWidget {
       } break;
       case AppointmentStatus.accepted: {
           backgroundColor = Colors.green.withOpacity(0.2);
-          textColor = Colors.orange;
+          textColor = Colors.amber;
       } break;
       case AppointmentStatus.rejected: {
         backgroundColor = Colors.red.withOpacity(0.2);

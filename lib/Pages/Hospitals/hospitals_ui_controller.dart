@@ -40,8 +40,8 @@ class HospitalsUiController extends GetxController {
           onTapClearFilter: () {
             clearFilter();
           },
-          onTapFilter: (rating, clinic, nearby) => filterHospitals(
-              rating: rating, clinicId: clinic, isNearby: nearby),
+          onTapFilter: (rating, specialismId, nearby) => filterHospitals(
+              rating: rating, specialismId: specialismId, isNearby: nearby),
         ),
         100.h);
   }
@@ -85,8 +85,8 @@ class HospitalsUiController extends GetxController {
     debugPrint("search");
   }
 
-  void filterHospitals({int? rating, int? clinicId, bool? isNearby}) async {
-    debugPrint("Hello $rating $clinicId $isNearby");
+  void filterHospitals({int? rating, int? specialismId, bool? isNearby}) async {
+    debugPrint("Hello $rating $specialismId $isNearby");
     if (isNearby != null) {
       if (isNearby) {
         _position = await _determinePosition();
@@ -101,7 +101,6 @@ class HospitalsUiController extends GetxController {
       debugPrint("Location ${_position?.latitude} ${_position?.longitude}");
     }
 
-    data.addIf(clinicId != null, "specilism", clinicId);
     data.addIf(rating != null, "order-by-rating", rating);
     Get.close(0);
     pagingController.refresh();
