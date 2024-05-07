@@ -157,10 +157,7 @@ class AuthenticationController extends GetxController
     final response = await apiService.login(body: formValues);
     if (response == null) return;
 
-    if (response.data['temp-token'] != null) {
-      Get.find<UserSession>().token = response.data['temp-token'];
-      Get.toNamed(OTPPage.id);
-    } else {
+    if(response.statusCode == 200){
       if (await Get.find<UserSession>().saveDoctorUser(response.data['result'])) {
         debugPrint(
             'Token  var is ${Get.find<UserSession>().token} and api is ${response.data['result']['token']}');
@@ -170,6 +167,10 @@ class AuthenticationController extends GetxController
         }
         Get.offAllNamed(HomePage.id);
       }
+    }
+    else if (response.statusCode == 203){
+      Get.find<UserSession>().token = response.data['result']['temp-token'];
+      Get.toNamed(OTPPage.id);
     }
   }
 
