@@ -14,7 +14,7 @@ class Plan {
     String? titleEn,
     String? descriptionAr,
     String? descriptionEn,
-    double? price,
+    num? price,
   }) {
     _id = id;
     _titleAr = titleAr;
@@ -37,14 +37,14 @@ class Plan {
   String? _titleEn;
   String? _descriptionAr;
   String? _descriptionEn;
-  double? _price;
+  num? _price;
 
   int get id => _id ?? 0;
   String get titleAr => _titleAr ?? "";
   String get titleEn => _titleEn ?? "";
   String get descriptionAr => _descriptionAr ?? "";
   String get descriptionEn => _descriptionEn ?? "";
-  double get price => _price ?? 0.0;
+  num get price => _price ?? 0.0;
   String get title => Get.locale == const Locale('en', 'US') ? _titleEn ?? "" : _titleAr ?? "";
   String get description => Get.locale == const Locale('en', 'US') ? _descriptionEn ?? "" : _descriptionAr ?? "";
 
